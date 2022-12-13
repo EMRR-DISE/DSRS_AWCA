@@ -1,0 +1,93 @@
+date,time,site,taxon,genus,density,type,volume_avg
+12/17/2018,12:20,FI_SAV_1,cf. Chlorella sp.,Chlorella,2299.846266,i,6.370620922
+12/17/2018,12:20,FI_SAV_1,Plagioselmis nannoplanctica,Plagioselmis,229.9846266,i,337.3808479
+12/17/2018,12:20,FI_SAV_1,Plagioselmis prolonga,Plagioselmis,689.9538799,i,130.7404094
+12/17/2018,12:20,FI_SAV_1,Eucapsis microscopica,Eucapsis,91763.86603,c,0.18
+12/17/2018,13:07,FI_SAV_2,Fragilaria sp.,Fragilaria,153.3230844,i,113.9140534
+12/17/2018,13:07,FI_SAV_2,Chlamydomonas sp.,Chlamydomonas,153.3230844,i,75.53220117
+12/17/2018,13:07,FI_SAV_2,cf. Chlorella sp.,Chlorella,2453.169351,i,6.370620922
+12/17/2018,13:07,FI_SAV_2,cf. Kephyrion sp.,Kephyrion,153.3230844,i,81.98712143
+12/17/2018,13:07,FI_SAV_2,Plagioselmis lacustris,Plagioselmis,459.9692533,i,499.3360956
+12/17/2018,13:07,FI_SAV_2,Plagioselmis nannoplanctica,Plagioselmis,306.6461689,i,430.3538477
+12/17/2018,13:07,FI_SAV_2,Eucapsis microscopica,Eucapsis,58569.41825,c,0.18
+12/17/2018,12:54,FI_WAT_1,cf. Cyclotella sp.,Cyclotella,229.9846266,i,122.7772642
+12/17/2018,12:54,FI_WAT_1,cf. Chlorella sp.,Chlorella,2989.800146,i,4.849044165
+12/17/2018,12:54,FI_WAT_1,Plagioselmis lacustris,Plagioselmis,459.9692533,i,515.5422494
+12/17/2018,12:54,FI_WAT_1,Plagioselmis prolonga,Plagioselmis,919.9385066,i,117.5216459
+12/17/2018,12:54,FI_WAT_1,Eucapsis microscopica,Eucapsis,92223.83529,c,0.18
+12/17/2018,13:18,FI_WAT_2,Achnanthidium sp.,Achnanthidium,176.9112513,i,90.31757091
+12/17/2018,13:18,FI_WAT_2,cf. Cyclotella sp.,Cyclotella,176.9112513,i,541.9054255
+12/17/2018,13:18,FI_WAT_2,cf. Chlorella sp.,Chlorella,3361.313774,i,7.23822336
+12/17/2018,13:18,FI_WAT_2,Plagioselmis lacustris,Plagioselmis,176.9112513,i,479.3815013
+12/17/2018,13:18,FI_WAT_2,Plagioselmis prolonga,Plagioselmis,176.9112513,i,76.35320336
+12/17/2018,13:18,FI_WAT_2,Eucapsis microscopica,Eucapsis,67403.18673,c,0.18
+12/17/2018,,LH_SAV_1,Cocconeis sp.,Cocconeis,143.7403917,i,407.6495768
+12/17/2018,,LH_SAV_1,cf. Cyclotella sp.,Cyclotella,287.4807833,i,64.19289387
+12/17/2018,,LH_SAV_1,cf. Chlorella sp.,Chlorella,431.221175,i,8.181223958
+12/17/2018,,LH_SAV_1,Plagioselmis lacustris,Plagioselmis,143.7403917,i,902.578807
+12/17/2018,,LH_SAV_1,Plagioselmis prolonga,Plagioselmis,574.9615666,i,161.9981827
+12/17/2018,,LH_SAV_1,Eucapsis microscopica,Eucapsis,57208.67588,c,0.18
+12/17/2018,14:30,LH_SAV_2,cf. Chlorella sp.,Chlorella,2299.846266,i,9.202764307
+12/17/2018,14:30,LH_SAV_2,Plagioselmis lacustris,Plagioselmis,191.6538555,i,596.7410935
+12/17/2018,14:30,LH_SAV_2,Plagioselmis nannoplanctica,Plagioselmis,383.3077111,i,281.8048118
+12/17/2018,14:30,LH_SAV_2,Plagioselmis prolonga,Plagioselmis,191.6538555,i,159.1309583
+12/17/2018,14:30,LH_SAV_2,Eucapsis microscopica,Eucapsis,75894.92679,c,0.18
+12/17/2018,,LH_WAT_1,Cocconeis placentula,Cocconeis,135.2850745,i,634.6640118
+12/17/2018,,LH_WAT_1,cf. Chlorella sp.,Chlorella,946.9955215,i,6.370620922
+12/17/2018,,LH_WAT_1,Plagioselmis lacustris,Plagioselmis,270.570149,i,732.1033054
+12/17/2018,,LH_WAT_1,Plagioselmis nannoplanctica,Plagioselmis,270.570149,i,314.737838
+12/17/2018,,LH_WAT_1,Plagioselmis prolonga,Plagioselmis,1217.56567,i,103.9080893
+12/17/2018,,LH_WAT_1,Eucapsis microscopica,Eucapsis,53302.31935,c,0.18
+12/17/2018,,LH_WAT_1,Peridinium sp.,Peridinium,135.2850745,i,17300.69686
+12/17/2018,14:42,LH_WAT_2,cf. Chlorella sp.,Chlorella,884.5562563,i,7.23822336
+12/17/2018,14:42,LH_WAT_2,Scenedesmus sp.,Scenedesmus,176.9112513,c,8.694873923
+12/17/2018,14:42,LH_WAT_2,Cryptomonas sp.,Cryptomonas,176.9112513,i,670.2330938
+12/17/2018,14:42,LH_WAT_2,Plagioselmis nannoplanctica,Plagioselmis,176.9112513,i,314.737838
+12/17/2018,14:42,LH_WAT_2,Plagioselmis prolonga,Plagioselmis,176.9112513,i,159.1309583
+12/17/2018,14:42,LH_WAT_2,Eucapsis microscopica,Eucapsis,71295.23426,c,0.18
+12/17/2018,14:42,LH_WAT_2,cf. Gymnodinium sp.,Gymnodinium,176.9112513,i,8454.289914
+12/18/2018,12:45,DI_SAV_2,Achnanthidium exiguum,Achnanthidium,287.4807833,i,255.4929483
+12/18/2018,12:45,DI_SAV_2,Entomoneis sp.,Entomoneis,287.4807833,i,2100.435658
+12/18/2018,12:45,DI_SAV_2,Nitzschia sp.,Nitzschia,287.4807833,i,473.156
+12/18/2018,12:45,DI_SAV_2,Staurosira construens,Staurosira,862.4423499,c,197.8384887
+12/18/2018,12:45,DI_SAV_2,cf. Chlorella sp.,Chlorella,2299.846266,i,7.23822336
+12/18/2018,12:45,DI_SAV_2,Plagioselmis nannoplanctica,Plagioselmis,287.4807833,i,314.737838
+12/18/2018,12:45,DI_SAV_2,Plagioselmis prolonga,Plagioselmis,574.9615666,i,159.1309583
+12/18/2018,12:45,DI_SAV_2,Eucapsis microscopica,Eucapsis,117292.1596,c,0.18
+12/18/2018,12:21,DI_WAT_1,Chaetoceros sp.,Chaetoceros,287.4807833,i,534.686837
+12/18/2018,12:21,DI_WAT_1,Chlamydomonas sp.,Chlamydomonas,287.4807833,i,87.67130493
+12/18/2018,12:21,DI_WAT_1,cf. Chlorella sp.,Chlorella,1437.403917,i,6.370620922
+12/18/2018,12:21,DI_WAT_1,Plagioselmis lacustris,Plagioselmis,574.9615666,i,902.578807
+12/18/2018,12:21,DI_WAT_1,Plagioselmis nannoplanctica,Plagioselmis,287.4807833,i,337.3808479
+12/18/2018,12:21,DI_WAT_1,Eucapsis microscopica,Eucapsis,112117.5055,c,0.18
+12/18/2018,12:55,DI_WAT_2,Cocconeis placentula,Cocconeis,209.0769333,i,824.0170659
+12/18/2018,12:55,DI_WAT_2,cf. Chlorella sp.,Chlorella,2718.000133,i,6.370620922
+12/18/2018,12:55,DI_WAT_2,Plagioselmis nannoplanctica,Plagioselmis,209.0769333,i,337.3808479
+12/18/2018,12:55,DI_WAT_2,Eucapsis microscopica,Eucapsis,83839.85026,c,0.18
+12/18/2018,11:51,DI-SAV-18,Cocconeis placentula,Cocconeis,287.4807833,i,488.203086
+12/18/2018,11:51,DI-SAV-18,cf. Chlorella sp.,Chlorella,2012.365483,i,7.23822336
+12/18/2018,11:51,DI-SAV-18,Plagioselmis prolonga,Plagioselmis,287.4807833,i,76.35320336
+12/18/2018,11:51,DI-SAV-18,Eucapsis microscopica,Eucapsis,124479.1792,c,0.18
+12/18/2018,13:28,FC_SAV_1,Melosira varians,Melosira,255.5384741,i,2943.885029
+12/18/2018,13:28,FC_SAV_1,cf. Chlorella sp.,Chlorella,2555.384741,i,9.202764307
+12/18/2018,13:28,FC_SAV_1,Cryptomonas sp.,Cryptomonas,255.5384741,i,670.2330938
+12/18/2018,13:28,FC_SAV_1,Plagioselmis lacustris,Plagioselmis,255.5384741,i,902.578807
+12/18/2018,13:28,FC_SAV_1,Plagioselmis prolonga,Plagioselmis,1788.769318,i,126.9233776
+12/18/2018,13:28,FC_SAV_1,Eucapsis microscopica,Eucapsis,100171.0818,c,0.18
+12/18/2018,,FC_SAV_2,cf. Chlorella sp.,Chlorella,2299.846266,i,7.23822336
+12/18/2018,,FC_SAV_2,Plagioselmis lacustris,Plagioselmis,209.0769333,i,596.7410935
+12/18/2018,,FC_SAV_2,Plagioselmis prolonga,Plagioselmis,1254.4616,i,108.0644128
+12/18/2018,,FC_SAV_2,cf. Aphanizomenon sp.,Aphanizomenon,627.2307999,f,24.01431396
+12/18/2018,,FC_SAV_2,Eucapsis microscopica,Eucapsis,82794.46559,c,0.18
+12/18/2018,14:00,FC_WAT_1,Achnanthidium sp.,Achnanthidium,459.9692533,i,54.42804675
+12/18/2018,14:00,FC_WAT_1,Chlamydomonas sp.,Chlamydomonas,459.9692533,i,96.132654
+12/18/2018,14:00,FC_WAT_1,cf. Chlorella sp.,Chlorella,459.9692533,i,3.591360968
+12/18/2018,14:00,FC_WAT_1,Plagioselmis lacustris,Plagioselmis,229.9846266,i,902.578807
+12/18/2018,14:00,FC_WAT_1,Plagioselmis prolonga,Plagioselmis,229.9846266,i,122.7772642
+12/18/2018,14:00,FC_WAT_1,Eucapsis microscopica,Eucapsis,90383.95827,c,0.18
+12/18/2018,,FC_WAT_2,cf. Chlorella sp.,Chlorella,1415.29001,i,7.23822336
+12/18/2018,,FC_WAT_2,Cryptomonas sp.,Cryptomonas,530.7337538,i,613.818515
+12/18/2018,,FC_WAT_2,Plagioselmis lacustris,Plagioselmis,353.8225025,i,731.362152
+12/18/2018,,FC_WAT_2,Plagioselmis nannoplanctica,Plagioselmis,530.7337538,i,321.5307409
+12/18/2018,,FC_WAT_2,Plagioselmis prolonga,Plagioselmis,530.7337538,i,116.1406553
+12/18/2018,,FC_WAT_2,Eucapsis microscopica,Eucapsis,72179.79052,c,0.18

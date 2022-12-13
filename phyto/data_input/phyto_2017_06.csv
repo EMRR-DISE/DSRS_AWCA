@@ -1,0 +1,100 @@
+date,time,site,taxon,genus,density,type,volume_avg
+6/7/2017,13:30,DI_SAV_1,Achnanthidium catenatum,Achnanthidium,375.3581476,i,46.38
+5/25/2017,9:07,DI_SAV_1,Achnanthidium minutissimum,Achnanthidium,1126.074443,i,34.69
+6/5/2017,14:09,FI_SAV_1,Achnanthidium minutissimum,Achnanthidium,643.4711102,i,60.21
+6/5/2017,14:30,FI_WAT_1,Achnanthidium minutissimum,Achnanthidium,563.0372214,i,38.86
+5/23/2017,16:05,LH_WAT_1,Achnanthidium sp.,Achnanthidium,375.3581476,i,78.11
+5/23/2017,15:38,FI_WAT_1,Achnanthidium sp.,Achnanthidium,450.4297771,i,60.21
+6/7/2017,13:30,DI_SAV_1,Actinastrum hantzschii,Actinastrum,375.3581476,c,3.85
+6/7/2017,11:21,DI_SAV_2,Amphora sp.,Amphora,900.8595543,i,127.79
+6/7/2017,11:21,DI_SAV_2,Aulacoseira sp. ,Aulacoseira,450.4297771,i,729.05
+6/5/2017,14:30,FI_WAT_1,Aulacoseira sp. ,Aulacoseira,563.0372214,i,135.05
+5/25/2017,9:07,DI_SAV_1,Bacillaria paxillifera,Bacillaria,563.0372214,i,1879.3
+5/23/2017,15:29,FI_SAV_1,Chlorella sp.,Chlorella,1801.719109,i,3.59
+5/23/2017,16:18,LH_SAV_1,Chlorella sp.,Chlorella,5630.372214,i,26.52
+5/25/2017,9:07,DI_SAV_1,Chlorella sp.,Chlorella,8445.558321,i,11.49
+5/23/2017,15:38,FI_WAT_1,Chlorella sp.,Chlorella,7657.306211,i,26.52
+5/25/2017,8:35,DI_WAT_1,Chlorella sp.,Chlorella,7882.5211,i,26.52
+6/5/2017,14:09,FI_SAV_1,Chlorella sp.,Chlorella,7721.653322,i,26.52
+6/5/2017,14:30,FI_WAT_1,Chlorella sp.,Chlorella,7882.5211,i,5.58
+6/5/2017,16:05,LH_WAT_1,Chlorella sp.,Chlorella,6005.730362,i,26.52
+6/7/2017,11:35,DI_WAT_2,Chlorella sp.,Chlorella,2252.148886,i,3.59
+5/23/2017,16:05,LH_WAT_1,Chlorella spp.,Chlorella,4128.939624,i,11.49
+5/25/2017,9:07,DI_SAV_1,cf. Chroococcus minutus,Chroococcus,1126.074443,i,113.1
+6/7/2017,11:21,DI_SAV_2,Chroococcus microscopicus,Chroococcus,203594.2593,c,0.17
+6/7/2017,12:50,DI_WAT_1,Chroococcus microscopicus,Chroococcus,147033.1487,c,0.17
+6/5/2017,15:40,LH_SAV_1,Chroococcus microscopicus,Chroococcus,236926.0628,c,0.17
+6/7/2017,13:30,DI_SAV_1,Chroococcus microscopicus,Chroococcus,167034.3757,c,0.17
+5/23/2017,15:29,FI_SAV_1,Chroococcus microscopicus,Chroococcus,193684.8042,c,0.17
+5/23/2017,16:18,LH_SAV_1,Chroococcus microscopicus,Chroococcus,143386.8124,c,0.17
+5/23/2017,16:05,LH_WAT_1,Chroococcus microscopicus,Chroococcus,150518.6172,c,0.17
+5/25/2017,9:07,DI_SAV_1,Chroococcus microscopicus,Chroococcus,211701.9952,c,0.17
+5/23/2017,15:38,FI_WAT_1,Chroococcus microscopicus,Chroococcus,188279.6468,c,0.17
+5/25/2017,8:35,DI_WAT_1,Chroococcus microscopicus,Chroococcus,142260.7379,c,0.17
+6/5/2017,14:09,FI_SAV_1,Chroococcus microscopicus,Chroococcus,253527.6174,c,0.17
+6/5/2017,14:30,FI_WAT_1,Chroococcus microscopicus,Chroococcus,226340.963,c,0.17
+6/5/2017,16:05,LH_WAT_1,Chroococcus microscopicus,Chroococcus,162154.7198,c,0.17
+6/7/2017,11:35,DI_WAT_2,Chroococcus microscopicus,Chroococcus,147515.752,c,0.17
+6/5/2017,15:40,LH_SAV_1,Chroococcus sp.,Chroococcus,450.4297771,c,4.19
+5/23/2017,15:29,FI_SAV_1,cf. Chroomonas rosenbergii,Chroomonas,450.4297771,i,314.74
+5/23/2017,16:05,LH_WAT_1,cf. Chroomonas rosenbergii,Chroomonas,375.3581476,i,430.35
+5/23/2017,15:38,FI_WAT_1,cf. Chroomonas rosenbergii,Chroomonas,900.8595543,i,369.08
+5/23/2017,16:18,LH_SAV_1,cf. Chroomonas nordstedtii ,Chroomonas,375.3581476,i,538.68
+6/7/2017,11:21,DI_SAV_2,Cocconeis placentula,Cocconeis,2702.578663,i,143.55
+6/7/2017,12:50,DI_WAT_1,Cocconeis placentula,Cocconeis,643.4711102,i,770.66
+6/7/2017,13:30,DI_SAV_1,Cocconeis placentula,Cocconeis,375.3581476,i,770.66
+5/25/2017,8:35,DI_WAT_1,Cocconeis sp.,Cocconeis,375.3581476,i,154.45
+6/7/2017,13:30,DI_SAV_1,cf. Cyclotella sp.,Cyclotella,1126.074443,i,185.83
+5/23/2017,16:05,LH_WAT_1,cf. Cyclotella sp.,Cyclotella,375.3581476,i,91.13
+5/23/2017,15:38,FI_WAT_1,cf. Cyclotella sp.,Cyclotella,450.4297771,i,46.53
+6/5/2017,14:09,FI_SAV_1,cf. Cyclotella sp.,Cyclotella,1930.413331,i,31.58
+5/23/2017,15:29,FI_SAV_1,Cyclotella sp.,Cyclotella,450.4297771,i,122.78
+5/25/2017,8:35,DI_WAT_1,Cyclotella sp.,Cyclotella,1501.43259,i,457.59
+6/7/2017,11:35,DI_WAT_2,Cyclotella sp.,Cyclotella,750.7162952,i,159.13
+6/5/2017,14:30,FI_WAT_1,Cyclotella spp.,Cyclotella,1126.074443,i,375.88
+6/7/2017,12:50,DI_WAT_1,Drepanochloris nannoselene,Drepanochloris,321.7355551,i,25.96
+5/23/2017,15:29,FI_SAV_1,Drepanochloris nannoselene,Drepanochloris,1801.719109,i,3.21
+5/23/2017,16:18,LH_SAV_1,Drepanochloris nannoselene,Drepanochloris,1126.074443,i,3.21
+6/5/2017,14:09,FI_SAV_1,Drepanochloris nannoselene,Drepanochloris,643.4711102,i,3.21
+6/7/2017,11:35,DI_WAT_2,Drepanochloris nannoselene,Drepanochloris,1501.43259,i,2.07
+5/25/2017,9:07,DI_SAV_1,Gomphonema parvulum,Gomphonema,563.0372214,i,336.41
+6/7/2017,11:21,DI_SAV_2,Gomphonema sp.,Gomphonema,1351.289331,i,163.45
+6/7/2017,11:35,DI_WAT_2,cf. Kephyrion sp.,Kephyrion,375.3581476,i,62.04
+6/7/2017,12:50,DI_WAT_1,cf. Leptolyngbya sp.,Leptolyngbya,321.7355551,f,5.39
+6/7/2017,11:21,DI_SAV_2,Melosira varians,Melosira,450.4297771,i,6961.98
+5/25/2017,8:35,DI_WAT_1,Monoraphidium minutum,Monoraphidium,375.3581476,i,13.99
+5/25/2017,9:07,DI_SAV_1,Monoraphidium tortile,Monoraphidium,563.0372214,i,9.05
+6/5/2017,16:05,LH_WAT_1,Monoraphidium tortile,Monoraphidium,375.3581476,i,6.28
+6/7/2017,13:30,DI_SAV_1,Nitzschia cf. inconspicua,Nitzschia,375.3581476,i,13.36
+5/23/2017,15:29,FI_SAV_1,Nitzschia palea,Nitzschia,450.4297771,i,43.5
+5/25/2017,9:07,DI_SAV_1,Nitzschia palea,Nitzschia,1126.074443,i,71.23
+6/5/2017,14:30,FI_WAT_1,Nitzschia palea,Nitzschia,563.0372214,i,84.71
+6/5/2017,15:40,LH_SAV_1,Nitzschia sp.,Nitzschia,450.4297771,i,71.71
+6/5/2017,15:40,LH_SAV_1,Nitzschia sp.,Nitzschia,450.4297771,i,45.7
+6/7/2017,13:30,DI_SAV_1,Nitzschia sp.,Nitzschia,1126.074443,i,33.39
+5/25/2017,9:07,DI_SAV_1,Nitzschia sp.,Nitzschia,563.0372214,i,827.74
+5/23/2017,15:38,FI_WAT_1,Nitzschia sp.,Nitzschia,450.4297771,i,29.53
+6/5/2017,14:30,FI_WAT_1,Nitzschia sp.,Nitzschia,563.0372214,i,671.33
+6/7/2017,11:21,DI_SAV_2,Nitzschia spp.,Nitzschia,2702.578663,i,79.09
+5/23/2017,15:29,FI_SAV_1,cf. Ochromonas sp.,Ochromonas,450.4297771,i,186.37
+5/23/2017,16:05,LH_WAT_1,cf. Ochromonas sp.,Ochromonas,375.3581476,i,242.1
+5/23/2017,15:29,FI_SAV_1,cf. Plagioselmis prolonga,Plagioselmis,900.8595543,i,68.96
+5/23/2017,16:05,LH_WAT_1,cf. Plagioselmis prolonga,Plagioselmis,750.7162952,i,76.35
+5/25/2017,9:07,DI_SAV_1,cf. Plagioselmis prolonga,Plagioselmis,1689.111664,i,211.01
+5/23/2017,15:38,FI_WAT_1,cf. Plagioselmis prolonga,Plagioselmis,1351.289331,i,112.82
+6/5/2017,14:09,FI_SAV_1,cf. Plagioselmis prolonga,Plagioselmis,643.4711102,i,154.83
+6/5/2017,14:30,FI_WAT_1,cf. Plagioselmis prolonga,Plagioselmis,4504.297771,i,146.23
+6/5/2017,16:05,LH_WAT_1,cf. Plagioselmis prolonga,Plagioselmis,1126.074443,i,112.82
+6/7/2017,11:35,DI_WAT_2,cf. Plagioselmis prolonga,Plagioselmis,3378.223328,i,67.32
+5/23/2017,15:29,FI_SAV_1,Plagioselmis nannoplanctica,Plagioselmis,450.4297771,i,430.35
+6/7/2017,13:30,DI_SAV_1,Plagioselmis sp.,Plagioselmis,750.7162952,i,159.13
+5/23/2017,16:05,LH_WAT_1,cf. Planktolyngbya sp.,Planktolyngbya,375.3581476,f,0.31
+6/7/2017,11:35,DI_WAT_2,cf. Planktolyngbya sp.,Planktolyngbya,375.3581476,f,1.81
+5/23/2017,15:29,FI_SAV_1,cf. Rhodomonas sp.,Rhodomonas,450.4297771,i,1485.22
+6/7/2017,11:21,DI_SAV_2,Strobilidium sp.,Strobilidium,450.4297771,i,30821.02
+6/5/2017,14:09,FI_SAV_1,cf. Synechococcus sp.,Synechococcus,643.4711102,c,3.59
+5/25/2017,9:07,DI_SAV_1,cf. Thalassiosira sp.,Thalassiosira,1126.074443,i,54.19
+6/5/2017,16:05,LH_WAT_1,cf. Thalassiosira sp.,Thalassiosira,750.7162952,i,200.19
+5/25/2017,8:35,DI_WAT_1,cf. Ulnaria sp.,Ulnaria,375.3581476,i,105.78
+6/7/2017,11:21,DI_SAV_2,Ulnaria sp.,Ulnaria,450.4297771,i,238.7
+6/7/2017,12:50,DI_WAT_1,Ulnaria sp.,Ulnaria,643.4711102,i,199.99
