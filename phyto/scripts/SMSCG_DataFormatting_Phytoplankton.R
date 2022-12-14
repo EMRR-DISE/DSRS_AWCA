@@ -42,178 +42,55 @@ phytoplankton <- phyto_files %>%
   #and the number of columns varies among the five data files
   map_dfr(~read_excel(.x, col_types = "text"), .id = "source") %>% 
   #reduce file name to just the needed info (ie, file name)
-  mutate(file = as.factor(str_sub(source,-12,-6))) %>% 
+  mutate(file_name = as.factor(str_sub(source,-12,-6))) %>% 
+  #clean up formatting of column names
+  clean_names() %>% 
   glimpse()
 #succeeded in combining all the sample files
 #but date and time are in weird format
-#also the sampling depth column has three variations: "Depth (m)", "Depth (ft.)", "Depth (ft)"
-#so when the files are combined, there are two extra depth columns added
 
 # Read in the other files----------------
 
 #read in taxonomy data
-#this probably needs to be updated with each new batch of data
 #update this file with the updates/corrections I got from AlgaeBase 2/24/2022
 taxonomy <- read_csv("phyto/data_input/taxonomy/phyto_2018-12_taxonomy_complete.csv")
 
-#clean up EMP station names and drop unneeded stations-------------
-
-#look at stations in the data set
-#unique(phytoplankton_emp$station_code)
-
-phyto_emp_stations <- phytoplankton_emp %>% 
-  #remove empty rows created by linear cell measurement rows (length, width, depth)  
-  #a little tricky just because the survey name appears in every row including the othewise empty ones
-  #chose the taxon column as the ones to check for missing data
-  drop_na(taxon) %>%
-  mutate(
-    #format date
-    date = as.Date(as.numeric(sample_date),origin = "1899-12-30")
-    #format time and specify that time zone is PST
-    ,time = as_hms(as.numeric(sample_time)*60*60*24)
-    #create a date time colum
-    ,date_time_PST = ymd_hms(as.character(paste(date, time)),tz="Etc/GMT+8")
-    #create a month column
-    ,month = as.numeric(month(date))
-    #correct two typos in station names
-    ,'station_corr' = case_when(grepl("E26", station_code) ~ "EZ6"
-                               ,grepl("NZ542", station_code) ~"NZS42"
-         ,TRUE ~ as.character(station_code)
-                  ))  %>% 
-  #add column that will be prefix to station names
-  add_column(station_pre = "EMP") %>% 
-  #add prefix to station names
-  unite('station', c(station_pre,station_corr),sep="_",remove=F) %>% 
-  #drop the June samples
-  filter(month!=6) %>% 
-  #drop one sample that was submitted to BSA empty
-  filter(!(station=="EMP_EZ6" & date=="2020-09-10")) %>% 
-  glimpse()
-#NOTE: there are 9 rows that don't format date-time
-#it's for a sample from a station I don't need
-#the time is missing for that sample
-
-#check time zone
-#tz(phyto_emp_stations$date_time_PST)
-
-#look at station names again
-#unique(phyto_emp_stations$station)
-
-#filter the data set to just the stations needed for SMSCG  
-phyto_emp <- inner_join(phyto_emp_stations, stations)
-
-#make sure the right stations were retained
-#unique(phyto_emp$station)
-#looks good
-
-
-#clean up DFW station names-------------
-
-#look at stations in the data set
-#unique(phytoplankton_dfw$station_code)
-
-phyto_dfw_stations <- phytoplankton_dfw %>% 
-  #remove empty rows created by linear cell measurement rows (length, width, depth)  
-  #a little tricky just because the survey name appears in every row including the othewise empty ones
-  #chose the taxon column as the ones to check for missing data
-  drop_na(taxon) %>% 
-  mutate(
-    #format date
-    date = as.Date(as.numeric(sample_date),origin = "1899-12-30")
-    #format time
-    ,time = as_hms(as.numeric(sample_time)*60*60*24)
-    #create a date time column; DFW records time in PDT
-    ,date_time_PDT = ymd_hms(as.character(paste(date, time)),tz="America/Los_Angeles")
-    #change PDT to PST to match the EMP times
-    ,date_time_PST = with_tz(date_time_PDT,tzone="Etc/GMT+8")
-    #create a month column
-    , month = as.numeric(month(date))
-    #add column that indicates which survey collected samples
-    ,'collected_by' = case_when(
-      station_code == "GZB" ~ "EMP"
-      ,month < 9 ~ "STN"
-      ,month > 8 ~ "FMWT")
-    #fix some station names
-    ,'station' = case_when(
-      #River stations
-      grepl("704", station_code) & month < 9 ~ "STN_704"
-      ,grepl("704", station_code) & month > 8 ~ "FMWT_704"
-      ,grepl("706", station_code) & month < 9 ~ "STN_706"
-      ,grepl("706", station_code) & month > 8 ~ "FMWT_706"
-      ,grepl("801", station_code) ~ "STN_801"
-      ,grepl("802", station_code) ~ "FMWT_802"
-      #East Marsh stations
-      ,grepl("MON", station_code) ~ "MONT"
-      ,grepl("609", station_code) ~ "STN_609"
-      ,grepl("610", station_code) ~ "STN_610"
-      #West Marsh stations
-      ,grepl("605", station_code) ~ "FMWT_605"
-      ,grepl("606", station_code) & month < 9 ~ "STN_606"
-      ,grepl("606", station_code) & month > 8 ~ "FMWT_606"
-      ,grepl("NZS42", station_code) ~ "EMP_NZS42"
-      #Bay stations
-      #note that GZB was only during 2021 and 519 station data starts in 2022
-      ,grepl("519", station_code) & month < 9 ~ "STN_519"
-      ,grepl("519", station_code) & month > 8 ~ "FMWT_519"
-      ,grepl("602", station_code) & month < 9 ~ "STN_602"
-      ,grepl("602", station_code) & month > 8 ~ "FMWT_602"
-      ,TRUE ~ as.character(station_code)            
-    )) %>%
-  glimpse()
-#4 rows for date time didn't parse because no time recorded for sample
-
-#make sure conversion of DFW time from PDT to PST worked
-#tz_check <- phyto_dfw_stations %>%
-#  select(date_time_PDT,date_time_PST) %>% 
-#  mutate(time_dif = ymd_hms(date_time_PDT) - ymd_hms(date_time_PST)) %>% 
-#  glimpse()
-#looks good
-
-#look at NAs for date time
-#time_nas <- phyto_dfw_stations %>% 
- # select(station_code,date,time,date_time_PDT,date_time_PST) %>% 
-  #filter(is.na(date_time_PDT))
-
-#check time zone
-#tz(phyto_dfw_stations$date_time_PST)
-
-#add the region and combo station data 
-phyto_dfw <- left_join(phyto_dfw_stations, stations)
-
-phyto_dfw_combo <- phyto_dfw %>% 
-  distinct(region, station, month, collected_by) %>% 
-  arrange(month, station, collected_by)
-
-
 #format the sample data set------------
-#NOTE: based on changes made above, need to update the column names retained below
-#ie, station
-
-#combine EMP and DFW sample data
-phytoplankton <- bind_rows(phyto_emp,phyto_dfw) %>% 
-  glimpse()
+#NOTE: leave out derived columns (ie, calculated from other columns)
+#then do calculations myself to minimize risk of errors
 
 phyto_cleanest <- phytoplankton %>% 
   #rename the confusingly incorrectly name column
   rename(total_cells=number_of_cells_per_unit) %>% 
   #subset to just the needed columns
-  select(collected_by
-         , region
-         , station
-         , station_comb
-         , date
-         , date_time_PST
-         , genus
-         , taxon
-         , colony_filament_individual_group_code
+  select(file_name
+         , sample_date
+         , sample_time
+         , station_code
+         , depth_ft #lots of NAs; I think this should be 3 feet for all
+         , volume_received_m_l
+         , volume_analyzed_m_l
          , unit_abundance
          , slide_chamber_area_mm2
-         , volume_analyzed_m_l
          , field_of_view_mm2
          , number_of_fields_counted
          , factor
          , total_cells
-         , biovolume_1:biovolume_10) %>%     
+         , biovolume_1:biovolume_10 
+         , bsa_tin
+         , taxon
+         , genus
+         , species
+         , synonym
+         , colony_filament_individual_group_code
+         ) %>% 
+  mutate(
+    #change some columns from text to numeric
+    across(depth_ft:bsa_tin, as.numeric)
+  ) %>% 
+  glimpse()
+
+
   rowwise() %>% 
   mutate(  
     #use the date-time column with standardized time zone to extract time
