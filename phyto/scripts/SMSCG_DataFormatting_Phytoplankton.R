@@ -1,7 +1,10 @@
-#Suisun Marsh Salinity Control Gate
-#Phytoplankton Data 2020-2021
+#Delta Smelt Resiliency Strategy 
+#Aquatic Weed Control Action
+#Phytoplankton Data 2017-2018
 #Format raw data in preparation for visualization and analysis
-#Biovolume calculations have been corrected
+
+#To do list-----------
+#need to correct biovolumes
 
 #required packages
 library(tidyverse) #suite of data science tools
@@ -17,112 +20,41 @@ library(readxl) #importing data from excel files
 #calculations in this script were corrected accordingly on 2/10/2022
 
 #create version of data set for phytoplankton synthesis effort
-#just needs to include the samples specific to the SMSCG action
-#hard to split the SMSCG and EMP data sets because NZS42 and NZ032 station names are
-#shared by the two surveys
-#probably should add a column to the imported data sets with the source file
-#that will allow us to keep track of which samples are from which survey
+
 
 #to do list
 #should check to see if organisms per ml and cells per ml are equal for cases where phyto_form = individual
 
-# Read in and combine the EMP data----------------------------------------------
+# Read in and combine phyto sample data----------------------------------------------
 
+#Create character vectors of all files (n = 5) 
+#NOTE: the first three files have the same set of columns
+#But the last two files do not; start with first three files
+phyto_files <- dir(path = "./phyto/data_input/abundances",pattern = ".xlsx|.XLSX", full.names = T)
 
-#Create character vectors of all 2020 EMP phytoplankton files (n = 5) 
-phyto_emp_20 <- dir(path = "EDI/data_input/phytoplankton/2020", pattern = "EMP", full.names = T)
+#Combine all of the data files into a single df
 
-#Combine all of the 2020 emp sample data files into a single df
-#specify format of columns because column types not automatically read consistently among files
-column_type20<-c(rep("text",4),rep("numeric",10),rep("text",5),rep("numeric",5),rep("text",5)
-               ,rep("numeric",10),"text",rep("numeric",26)) 
-
-phytoplankton_emp_20 <- phyto_emp_20 %>% 
+phytoplankton <- phyto_files %>% 
   #set_names() grabs the file names
   set_names() %>%  
   #reads in the files, .id adds the file name column
-  map_dfr(~read_excel(.x, col_types = column_type20), .id = "source") %>% 
-  #reduce file name to just the needed info (ie, survey)
-  mutate(collected_by = as.factor(str_sub(source,25,27))) %>% 
+  #also imports all data as text because date and time columns don't import correctly otherwise
+  #and the number of columns varies among the five data files
+  map_dfr(~read_excel(.x, col_types = "text"), .id = "source") %>% 
+  #reduce file name to just the needed info (ie, file name)
+  mutate(file = as.factor(str_sub(source,-12,-6))) %>% 
   glimpse()
 #succeeded in combining all the sample files
 #but date and time are in weird format
 #also the sampling depth column has three variations: "Depth (m)", "Depth (ft.)", "Depth (ft)"
 #so when the files are combined, there are two extra depth columns added
 
-
-#Create character vectors of all 2021 EMP phytoplankton files (n = 5) and then for the DFW file
-#doing this separately from 2020 because there's an extra column in these files
-#the "Full Code" column is the FLIMS code; relevant to EMP samples but not DFW samples
-phyto_emp_21 <- dir(path = "EDI/data_input/phytoplankton/2021", pattern = "EMP", full.names = T)
-
-#Combine all of the 2021 sample data files into a single df
-#specify format of columns because column types not automatically read consistently among files
-#accounts for extra column in 2021 files
-column_type21<-c(rep("text",5),rep("numeric",10),rep("text",5),rep("numeric",5),rep("text",5)
-                 ,rep("numeric",10),"text",rep("numeric",26)) 
-
-phytoplankton_emp_21 <- phyto_emp_21 %>% 
-  #set_names() grabs the file names
-  set_names() %>%  
-  #reads in the files, .id adds the file name column
-  map_dfr(~read_excel(.x, col_types = column_type21), .id = "source") %>% 
-  #reduce file name to just the needed info (ie, survey)
-  mutate(collected_by = as.factor(str_sub(source,25,27))) %>% 
-  glimpse()
-#succeeded in combining all the sample files
-#but date and time are in weird format
-
-#combine the 2020 and 2021 EMP data sets
-#bind_rows can handle the fact that not all columns will match between data sets
-phytoplankton_emp <- bind_rows(phytoplankton_emp_20,phytoplankton_emp_21) %>% 
-  clean_names() %>% 
-  glimpse()
-#the three non-matching columns get kicked to the end of the combined df
-
-
-# Read in and combine the DFW data----------------------------------------------
-
-#Create character vectors of all 2020 DFW phytoplankton files 
-phyto_dfw_20 <- dir(path = "EDI/data_input/phytoplankton/2020", pattern = "DFW", full.names = T)
-
-phytoplankton_dfw_20 <- phyto_dfw_20 %>% 
-  #set_names() grabs the file names
-  set_names() %>%  
-  #reads in the files, .id adds the file name column
-  map_dfr(~read_excel(.x, col_types = column_type20), .id = "source") %>% 
-  glimpse()
-
-#Create character vectors of all 2020 EMP phytoplankton files (n = 5) and then for the DFW file
-#doing this separately from 2020 because there's an extra column in these files
-#the "Full Code" column is the FLIMS code; relevant to EMP samples but not DFW samples
-phyto_dfw_21 <- dir(path = "EDI/data_input/phytoplankton/2021", pattern = "DFW", full.names = T)
-
-phytoplankton_dfw_21 <- phyto_dfw_21 %>% 
-  #set_names() grabs the file names
-  set_names() %>%  
-  #reads in the files, .id adds the file name column
-  map_dfr(~read_excel(.x, col_types = column_type21), .id = "source") %>% 
-  glimpse()
-
-#combine the 2020 and 2021 EMP data sets
-#bind_rows can handle the fact that not all columns will match between data sets
-phytoplankton_dfw <- bind_rows(phytoplankton_dfw_20,phytoplankton_dfw_21) %>% 
-  clean_names() %>% 
-  glimpse()
-
-
 # Read in the other files----------------
 
 #read in taxonomy data
 #this probably needs to be updated with each new batch of data
 #update this file with the updates/corrections I got from AlgaeBase 2/24/2022
-taxonomy <- read_excel(path = "EDI/data_input/phytoplankton/PhytoplanktonTaxonomy_2022-02-09.xlsx")
-
-#read in station name info
-#includes region categories, station names, and names that identify comparable stations through time
-stations <- read_csv("EDI/data_input/phytoplankton/stations.csv")
-
+taxonomy <- read_csv("phyto/data_input/taxonomy/phyto_2018-12_taxonomy_complete.csv")
 
 #clean up EMP station names and drop unneeded stations-------------
 
