@@ -5,6 +5,7 @@
 
 #To do list-----------
 #need to correct biovolumes
+#is time in PST or PDT? I think the latter but need to check
 
 #required packages
 library(tidyverse) #suite of data science tools
@@ -64,37 +65,37 @@ phyto_cleanest <- phytoplankton %>%
   rename(total_cells=number_of_cells_per_unit) %>% 
   #subset to just the needed columns
   select(file_name
-         , sample_date
-         , sample_time
-         , station_code
-         , depth_ft #lots of NAs; I think this should be 3 feet for all
-         , volume_received_m_l
-         , volume_analyzed_m_l
-         , unit_abundance
-         , slide_chamber_area_mm2
-         , field_of_view_mm2
-         , number_of_fields_counted
-         , factor
-         , total_cells
-         , biovolume_1:biovolume_10 
-         , bsa_tin
-         , taxon
-         , genus
-         , species
-         , synonym
-         , colony_filament_individual_group_code
+         ,sample_date
+         ,sample_time
+         ,station_code
+         ,depth_ft #lots of NAs; I think this should be 3 feet for all
+         ,volume_received_m_l
+         ,volume_analyzed_m_l
+         ,unit_abundance
+         ,slide_chamber_area_mm2
+         ,field_of_view_mm2
+         ,number_of_fields_counted
+         ,factor
+         ,total_cells
+         ,biovolume_1:biovolume_10 
+         ,bsa_tin
+         ,taxon
+         ,genus
+         ,species
+         ,synonym
+         ,phyto_form = colony_filament_individual_group_code
          ) %>% 
   mutate(
     #change some columns from text to numeric
     across(depth_ft:bsa_tin, as.numeric)
-  ) %>% 
-  glimpse()
-
-
-  rowwise() %>% 
-  mutate(  
-    #use the date-time column with standardized time zone to extract time
-    time = as_hms(date_time_PST)
+    #format date; check date and time against input files to see if formatting worked correctly
+    ,date = as.Date(as.numeric(sample_date),origin = "1899-12-30")
+    #format time and specify that time zone is PST
+    ,time = as_hms(as.numeric(sample_time)*60*60*24)
+    #create a date time column; not sure this is pst; might be pdt
+    ,date_time_pst = ymd_hms(as.character(paste(date, time)),tz="Etc/GMT+8")
+    #calculate percent of sample volume analyzed
+    ,volume_analyzed_perc = volume_received_m_l/volume_analyzed_m_l
     #create new column that calculates mean biovolume per cell
     ,mean_cell_biovolume = mean(c_across(biovolume_1:biovolume_10),na.rm=T)
     #create new column that calculates organisms per mL; round number to nearest tenth
@@ -109,42 +110,45 @@ phyto_cleanest <- phytoplankton %>%
     #,biovolume_per_ml_old = organisms_per_ml * total_cells * mean_cell_biovolume
     ,biovolume_per_ml = round((total_cells* mean_cell_biovolume*slide_chamber_area_mm2)/(volume_analyzed_m_l*field_of_view_mm2*number_of_fields_counted),1)
     #,biovolume_per_ml_easy = factor * total_cells * mean_cell_biovolume
-    ) %>% 
-  #simplify column names
-  rename(phyto_form =  colony_filament_individual_group_code) %>% 
+  ) %>% 
   #subset and reorder columns again to just those needed
-  select(collected_by
-         ,region
-         ,station
-         ,station_comb
+  select(file_name
          ,date
          ,time
+         ,date_time_pst
+         ,station = station_code
+         ,depth_ft
+         ,volume_received_m_l
+         ,volume_analyzed_m_l
+         ,volume_analyzed_perc
+         ,bsa_tin
+         ,taxon
          ,genus
-         ,taxon                              
-         ,phyto_form           
+         ,species
+         ,synonym
+         ,phyto_form         
          ,organisms_per_ml
-         #,organisms_per_ml_easy
          ,cells_per_ml
-         #,cells_per_ml_easy
-         #,biovolume_per_ml_old
          ,biovolume_per_ml
-         #,biovolume_per_ml_easy
-           ) %>% 
+         ) %>% 
   glimpse()
 #I prefer to use the formulas based on the more raw version of the data 
 #rather than the ones based on the factor column
 #which is a derived column and therefore more prone to errors
-#warnings indicate some missing times; I know some times weren't recorded
+#NOTE: 674 failed to parse for date_time_pst; figure out why; NAs?
+
 
 #look at station names
-#unique(phyto_cleanest$station)
+unique(phyto_cleanest$station)
+#some clean up to do here; reference old code for more info
 
 #look at number of samples per station
 samp_count<-phyto_cleanest %>% 
-  distinct(region,station, date) %>% 
-  group_by(region,station) %>% 
+  distinct(station, date) %>% 
+  group_by(station) %>% 
   summarize(count = n())
-#looks fine
+#need to look into this some more
+#one case of NA for station which shouldn't be
 
 #check for NAs
 #check_na <- phyto_cleanest[rowSums(is.na(phyto_cleanest)) > 0,]
