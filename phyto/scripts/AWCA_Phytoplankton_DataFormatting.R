@@ -3,37 +3,37 @@
 #Phytoplankton Data 2017-2018
 #Format raw data in preparation for visualization and analysis
 
-#To do list-----------
-#need to correct biovolumes
-#is time in PST or PDT? I think the latter but need to check
-
 #required packages
 library(tidyverse) #suite of data science tools
 library(janitor) #functions for cleaning up data sets
 library(hms) #working with date/time
 library(lubridate) #working with dates
 library(readxl) #importing data from excel files
-#library(algaeClassify) #grab taxonomy info from AlgaeBase; doesn't work currently
 
 #Notes
 #For all BSA files from 2013 to 2021, the column "Number of cells per unit" really means "Total cells", 
 #which is the total number of cells counted for that taxon in a particular sample
 #calculations in this script were corrected accordingly on 2/10/2022
 
-#create version of data set for phytoplankton synthesis effort
-
-
-#to do list
+#To do list------------------
+#is time in PST or PDT? I think the latter but need to check; it might even have changed over time
+#also figure out why some date-time failed to parse; probably missing times
 #should check to see if organisms per ml and cells per ml are equal for cases where phyto_form = individual
+#prep data set for publishing on EDI
+#move analysis and most plotting to a different script
+#use biovolume to calculate biomass
+#then calculate fatty acid content
+#try to match plankton samples with veg rake samples
+#look at all comments from taxonomists for red flags; most probably just note high sediment levels
 
-# Read in and combine phyto sample data----------------------------------------------
+# Read in and combine phyto abundance data----------------------------------------------
 
 #Create character vectors of all files (n = 5) 
-#NOTE: the first three files have the same set of columns
-#But the last two files do not; start with first three files
 phyto_files <- dir(path = "./phyto/data_input/abundances",pattern = ".xlsx|.XLSX", full.names = T)
 
 #Combine all of the data files into a single df
+#column names and order are identical for the first three files
+#But the last two files have additional columns
 
 phytoplankton <- phyto_files %>% 
   #set_names() grabs the file names
@@ -67,36 +67,43 @@ phyto_cleanest <- phytoplankton %>%
   select(file_name
          ,sample_date
          ,sample_time
-         ,station_code
-         ,depth_ft #lots of NAs; I think this should be 3 feet for all
-         ,volume_received_m_l
-         ,volume_analyzed_m_l
-         ,unit_abundance
-         ,slide_chamber_area_mm2
-         ,field_of_view_mm2
-         ,number_of_fields_counted
-         ,factor
-         ,total_cells
-         ,biovolume_1:biovolume_10 
-         ,bsa_tin
+         ,station = station_code
+         ,volume_received_m_l #probably optional
+         ,volume_analyzed_m_l #needed
+         ,field_of_view_mm2 #needed
+         ,slide_chamber_area_mm2 #needed
+         ,area_counted #derived column?
+         ,number_of_fields_counted #needed
+         ,factor #derived column we can drop
+         ,bsa_tin #keep for now; will make filtering by taxa a little easier 
          ,taxon
+         ,diatom_soft_body #will drop this later; check against my taxonomy first
          ,genus
          ,species
          ,synonym
+         ,unit_abundance #needed
+         ,total_cells #needed
+         ,gald #probably optional
          ,phyto_form = colony_filament_individual_group_code
+         ,taxonomist #useful for look at potential ID biases
+         ,comments #need to look at these before consider dropping this column
+         ,biovolume_1:biovolume_10 #needed
          ) %>% 
   mutate(
     #change some columns from text to numeric
-    across(depth_ft:bsa_tin, as.numeric)
+    across(c(volume_received_m_l:bsa_tin,unit_abundance:gald,biovolume_1:biovolume_10), as.numeric)
+    #change station from character to factor
+    ,across(c(station,phyto_form,taxonomist),as.factor)
     #format date; check date and time against input files to see if formatting worked correctly
     ,date = as.Date(as.numeric(sample_date),origin = "1899-12-30")
-    #format time and specify that time zone is PST
+    #format time
     ,time = as_hms(as.numeric(sample_time)*60*60*24)
     #create a date time column; not sure this is pst; might be pdt
     ,date_time_pst = ymd_hms(as.character(paste(date, time)),tz="Etc/GMT+8")
     #calculate percent of sample volume analyzed
-    ,volume_analyzed_perc = volume_received_m_l/volume_analyzed_m_l
+    ,volume_analyzed_prop = volume_received_m_l/volume_analyzed_m_l
     #create new column that calculates mean biovolume per cell
+    #add units to biovolume
     ,mean_cell_biovolume = mean(c_across(biovolume_1:biovolume_10),na.rm=T)
     #create new column that calculates organisms per mL; round number to nearest tenth
     #different from cells per mL because some organisms are multicellular
@@ -110,33 +117,39 @@ phyto_cleanest <- phytoplankton %>%
     #,biovolume_per_ml_old = organisms_per_ml * total_cells * mean_cell_biovolume
     ,biovolume_per_ml = round((total_cells* mean_cell_biovolume*slide_chamber_area_mm2)/(volume_analyzed_m_l*field_of_view_mm2*number_of_fields_counted),1)
     #,biovolume_per_ml_easy = factor * total_cells * mean_cell_biovolume
-  ) %>% 
-  #subset and reorder columns again to just those needed
+  )  %>% 
   select(file_name
          ,date
          ,time
          ,date_time_pst
-         ,station = station_code
-         ,depth_ft
-         ,volume_received_m_l
-         ,volume_analyzed_m_l
-         ,volume_analyzed_perc
-         ,bsa_tin
+         ,station 
+         ,volume_analyzed_m_l #needed
+         ,volume_analyzed_prop
+         ,field_of_view_mm2 #needed
+         ,slide_chamber_area_mm2 #needed
+         ,area_counted #derived column?
+         ,number_of_fields_counted #needed
+         ,bsa_tin #keep for now; will make filtering by taxa a little easier 
          ,taxon
+         ,diatom_soft_body #will drop this later; check against my taxonomy first
          ,genus
          ,species
          ,synonym
-         ,phyto_form         
+         ,unit_abundance #needed
+         ,total_cells #needed
+         ,gald #probably optional
+         ,phyto_form 
+         ,taxonomist #useful for look at potential ID biases
+         ,comments #need to look at these before consider dropping this column
          ,organisms_per_ml
          ,cells_per_ml
          ,biovolume_per_ml
-         ) %>% 
+  ) %>% 
   glimpse()
 #I prefer to use the formulas based on the more raw version of the data 
 #rather than the ones based on the factor column
 #which is a derived column and therefore more prone to errors
 #NOTE: 674 failed to parse for date_time_pst; figure out why; NAs?
-
 
 #look at station names
 unique(phyto_cleanest$station)
@@ -149,6 +162,17 @@ samp_count<-phyto_cleanest %>%
   summarize(count = n())
 #need to look into this some more
 #one case of NA for station which shouldn't be
+
+#look at ranges of some of the raw data columns to decide 
+#whether to retain in dataset or just describe in metadata
+
+range(phyto_cleanest$volume_analyzed_m_l,na.rm = T) #1-10; pretty wide range
+range(phyto_cleanest$field_of_view_mm2,na.rm = T) #0.0683000 0.0697465; pretty narrow
+range(phyto_cleanest$slide_chamber_area_mm2,na.rm = T) #314.159 314.159
+range(phyto_cleanest$area_counted,na.rm = T) #0.3415 1.5709, somewhat large range
+
+hist(phyto_cleanest$volume_analyzed_m_l)
+
 
 #check for NAs
 #check_na <- phyto_cleanest[rowSums(is.na(phyto_cleanest)) > 0,]
