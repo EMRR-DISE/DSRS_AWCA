@@ -19,9 +19,16 @@ rm(list=ls())
 # Import Raw Data --------------------------------------------------------------
 
 # Import data files
-zoop_files <- dir(path = "data/CSV2", pattern = "\\.csv", full.names = T)
+zoop_files <- dir(path = "data/Data_CSV", pattern = "\\.csv", full.names = T)
 
-df_zoop <- map_dfr(zoop_files, ~read_csv(.x))
+df_zoop <- map_dfr(zoop_files, ~read_csv(.x, col_types = "cctccdddddd")) %>%
+  mutate(date = parse_date_time(date, c("Ymd", "mdY")))
+
+zoop <- map_dfr(zooplankton, ~ read_csv(.x, col_types = "cctccdddddd")) %>% 
+  # Parse date_time variable from character to date_time format
+  #also had to deal with fact that dates were in two different formats
+  mutate(date = parse_date_time(date, c("Ymd", "mdY")))
+str(df_zoop)
 
 # Clean up column names
 df_zoop <- df_zoop %>% clean_names(case = "big_camel")
