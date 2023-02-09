@@ -1,0 +1,8 @@
+sample,date,time,category,taxon,count,subsample,v1_ml,sub1_ml,v2_ml,sub2_ml
+USGS_5,2018-07-05,14:25,MICROZOOPLANKTON & NAUPLII,Rotifers,126.0,1.0,67,1.6,67.0,0.3
+USGS_5,2018-07-05,14:25,MICROZOOPLANKTON & NAUPLII,Copepod nauplii,195.0,1.0,67,1.6,67.0,0.3
+USGS_5,2018-07-05,14:25,CYCLOPOIDS,Cyclopoid copepodid,5.0,1.0,67,1.6,67.0,0.3
+USGS_5,2018-07-05,14:25,CALANOIDS,Calanoid copepodid,232.0,1.0,67,1.6,67.0,0.3
+USGS_5,2018-07-05,14:25,CALANOIDS,Pseudodiaptomus forbesi adult,2.0,1.0,67,1.6,67.0,0.3
+USGS_5,2018-07-05,14:25,CLADOCERA,Daphnia,1,1.0,67,1.6,67.0,0.3
+USGS_5,2018-07-05,14:25,CLADOCERA,Diaphanosoma,1,1.0,67,1.6,67.0,0.3

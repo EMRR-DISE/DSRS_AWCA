@@ -1,0 +1,7 @@
+sample,date,time,category,taxon,count,subsample,v1_ml,sub1_ml,v2_ml,sub2_ml
+LH_WAT_2,2018-08-07,16:15,MICROZOOPLANKTON & NAUPLII,Rotifers,19.0,1.0,29,2,29.0,1
+LH_WAT_2,2018-08-07,16:15,MICROZOOPLANKTON & NAUPLII,Copepod nauplii,347.0,1.0,29,2,29.0,1
+LH_WAT_2,2018-08-07,16:15,CYCLOPOIDS,Cyclopoid copepodid,3.0,1.0,29,2,29.0,1
+LH_WAT_2,2018-08-07,16:15,CYCLOPOIDS,Limnoithona tetraspina,2.0,1.0,29,2,29.0,1
+LH_WAT_2,2018-08-07,16:15,CALANOIDS,Calanoid copepodid,336.0,1.0,29,2,29.0,1
+LH_WAT_2,2018-08-07,16:15,CLADOCERA,Bosmina,3,1.0,29,2,29.0,1

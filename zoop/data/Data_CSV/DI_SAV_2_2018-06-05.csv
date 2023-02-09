@@ -1,0 +1,9 @@
+sample,date,time,category,taxon,count,subsample,v1_ml,sub1_ml,v2_ml,sub2_ml
+DI_SAV_2,2018-06-05,10:27,MICROZOOPLANKTON & NAUPLII,Rotifers,9.0,1.0,97,0.2,97.0,0.8
+DI_SAV_2,2018-06-05,10:27,MICROZOOPLANKTON & NAUPLII,Copepod nauplii,343.0,1.0,97,0.2,97.0,0.8
+DI_SAV_2,2018-06-05,10:27,CYCLOPOIDS,Cyclopoid copepodid,26.0,1.0,97,0.2,97.0,0.8
+DI_SAV_2,2018-06-05,10:27,CALANOIDS,Calanoid copepodid,3.0,1.0,97,0.2,97.0,0.8
+DI_SAV_2,2018-06-05,10:27,CALANOIDS,Pseudodiaptomus forbesi adult,14.0,1.0,97,0.2,97.0,0.8
+DI_SAV_2,2018-06-05,10:27,CLADOCERA,Graptoleberis,1,1.0,97,0.2,97.0,0.8
+DI_SAV_2,2018-06-05,10:27,CLADOCERA,Sida,4,1.0,97,0.2,97.0,0.8
+DI_SAV_2,2018-06-05,10:27,HARPACTICOIDS,Harpacticoids,218,1.0,97,0.2,97.0,0.8

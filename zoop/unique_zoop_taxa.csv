@@ -1,109 +1,109 @@
-Category,Taxon
-Calanoids,Acartia copepodid
-Calanoids,Acartia spp.
-Calanoids,Acartiella copepodid
-Calanoids,Acartiella sinensis
-Calanoids,Aglaodiaptomus forbesi
-Calanoids,Arctodiaptomus dorsalis
-Calanoids,Calanoid adult
-Calanoids,Calanoid copepodid
-Calanoids,Diaptomus copepodid
-Calanoids,Diaptomus spp.
-Calanoids,Eurytemora affinis adult
-Calanoids,Eurytemora affinis copepodid
-Calanoids,Hesperodiaptomus cf. californiensis
-Calanoids,Hesperodiaptomus franciscanus
-Calanoids,Hesperodiaptomus sp.
-Calanoids,Leptodiaptomus siciloides
-Calanoids,Osphranticum copepodid
-Calanoids,Osphranticum labronectum
-Calanoids,Pseudodiaptomus forbesi adult
-Calanoids,Pseudodiaptomus forbesi copepodid
-Calanoids,Sinocalanus doerrii adult
-Calanoids,Sinocalanus doerrii copepodid
-Calanoids,Skistodiaptomus pallidus
-Calanoids,Tortanus copepodid
-Calanoids,Tortanus spp.
-Cladocera,Alona
-Cladocera,Alonella
-Cladocera,Bosmina
-Cladocera,Camptocercus
-Cladocera,Ceriodaphnia
-Cladocera,Chydorus
-Cladocera,Daphnia
-Cladocera,Diaphanosoma
-Cladocera,Disparalona
-Cladocera,Eurycercus
-Cladocera,Graptoleberis
-Cladocera,Ilyocryptus
-Cladocera,Immature Cladoceran
-Cladocera,Kurzia
-Cladocera,Leydigia
-Cladocera,Macrothrix
-Cladocera,Moina
-Cladocera,Monospilus
-Cladocera,Picripleuroxus
-Cladocera,Pleuroxus
-Cladocera,Pseudochydorus
-Cladocera,Scaphloberis
-Cladocera,Sida
-Cladocera,Simocephalus
-Cyclopoids,Acanthocyclops vernalis adult
-Cyclopoids,Acanthocyclops vernalis copepodid
-Cyclopoids,Cyclopoid adult
-Cyclopoids,Cyclopoid copepodid
-Cyclopoids,Diacyclops thomasi
-Cyclopoids,Ectocyclops phaleratus
-Cyclopoids,Ergasilus sp.
-Cyclopoids,Eucyclops
-Cyclopoids,Eucyclops agilis
-Cyclopoids,Eucyclops elegans
-Cyclopoids,Eucyclops pectinifer
-Cyclopoids,Eucyclops prionophorus
-Cyclopoids,Eucyclops sp.
-Cyclopoids,Eucyclops spp.
-Cyclopoids,Limnoithona copepodid
-Cyclopoids,Limnoithona sinensis
-Cyclopoids,Limnoithona spp.
-Cyclopoids,Limnoithona tetraspina
-Cyclopoids,Macrocyclops albidus
-Cyclopoids,Macrocyclops sp.
-Cyclopoids,Macrocyclops spp.
-Cyclopoids,Mesocyclops edax
-Cyclopoids,Microcyclops rubellus
-Cyclopoids,Microcyclops spp.
-Cyclopoids,Monospilus
-Cyclopoids,Monospilus sp.
-Cyclopoids,Oithona copepodid
-Cyclopoids,Oithona davisae
-Cyclopoids,Oithona similis
-Cyclopoids,Oithona spp.
-Cyclopoids,Paracyclops
-Cyclopoids,Paracyclops chiltoni
-Cyclopoids,Paracyclops fimbriatus
-Cyclopoids,Paracyclops poppei
-Cyclopoids,Paracyclops sp.
-Cyclopoids,Paracyclops spp.
-Cyclopoids,Tropocyclops prasinus
-Cyclopoids,Tropocyclops sp.
-Harpacticoids,Harpacticoids
-Macrozooplankton,Americorophium
-Macrozooplankton,Annelid
-Macrozooplankton,Baby Clam
-Macrozooplankton,Baby snail
-Macrozooplankton,Clam
-Macrozooplankton,Corophium spp.
-Macrozooplankton,Cumacean
-Macrozooplankton,Fish
-Macrozooplankton,Fish eggs
-Macrozooplankton,Gammarus spp.
-Macrozooplankton,Insect larvae
-Macrozooplankton,Isopod
-Macrozooplankton,Larval Fish
-Macrozooplankton,Mysids
-Macrozooplankton,Shrimp
-Macrozooplankton,Snail
-Microzooplankton,Barnacles
-Microzooplankton,Copepod nauplii
-Microzooplankton,Ostracods
-Microzooplankton,Rotifers
+Category,Taxon,Name,Genus,Life Stage
+Calanoids,Acartia copepodid,Acartia copepodid,Acartia,Copepodid
+Calanoids,Acartia spp.,Acartia spp.,Acartia,
+Calanoids,Acartiella copepodid,Acartiella copepodid,Acartiella,Copepodid
+Calanoids,Acartiella sinensis,Acartiella sinensis,Acartiella,
+Calanoids,Aglaodiaptomus forbesi,Aglaodiaptomus forbesi,Aglaodiaptomus,
+Calanoids,Arctodiaptomus dorsalis,Arctodiaptomus dorsalis,Arctodiaptomus,
+Calanoids,Calanoid adult,Calanoid,,Adult
+Calanoids,Calanoid copepodid,Calanoid,,Copepodid
+Calanoids,Diaptomus copepodid,Diaptomus,Diaptomus,Copepodid
+Calanoids,Diaptomus spp.,Diaptomus spp.,Diaptomus,
+Calanoids,Eurytemora affinis adult,Eurytemora affinis,Eurytemora,Adult
+Calanoids,Eurytemora affinis copepodid,Eurytemora affinis,Eurytemora,Copepodid
+Calanoids,Hesperodiaptomus cf. californiensis,Hesperodiaptomus cf. californiensis,Hesperodiaptomus,
+Calanoids,Hesperodiaptomus franciscanus,Hesperodiaptomus franciscanus,Hesperodiaptomus,
+Calanoids,Hesperodiaptomus sp.,Hesperodiaptomus sp.,Hesperodiaptomus,
+Calanoids,Leptodiaptomus siciloides,Leptodiaptomus siciloides,Leptodiaptomus,
+Calanoids,Osphranticum copepodid,Osphranticum copepodid,Osphranticum,Copepodid
+Calanoids,Osphranticum labronectum,Osphranticum labronectum,Osphranticum,
+Calanoids,Pseudodiaptomus forbesi adult,Pseudodiaptomus forbesi,Pseudodiaptomus,Adult
+Calanoids,Pseudodiaptomus forbesi copepodid,Pseudodiaptomus forbesi,Pseudodiaptomus,Copepodid
+Calanoids,Sinocalanus doerrii adult,Sinocalanus doerrii,Sinocalanus,Adult
+Calanoids,Sinocalanus doerrii copepodid,Sinocalanus doerrii,Sinocalanus,Copepodid
+Calanoids,Skistodiaptomus pallidus,Skistodiaptomus pallidus,Skistodiaptomus,
+Calanoids,Tortanus copepodid,Tortanus copepodid,Tortanus,Copepodid
+Calanoids,Tortanus spp.,Tortanus spp.,Tortanus,
+Cladocera,Alona,Alona,Alona,
+Cladocera,Alonella,Alonella,Alonella,
+Cladocera,Bosmina,Bosmina,Bosmina,
+Cladocera,Camptocercus,Camptocercus,Camptocercus,
+Cladocera,Ceriodaphnia,Ceriodaphnia,Ceriodaphnia,
+Cladocera,Chydorus,Chydorus,Chydorus,
+Cladocera,Daphnia,Daphnia,Daphnia,
+Cladocera,Diaphanosoma,Diaphanosoma,Diaphanosoma,
+Cladocera,Disparalona,Disparalona,Disparalona,
+Cladocera,Eurycercus,Eurycercus,Eurycercus,
+Cladocera,Graptoleberis,Graptoleberis,Graptoleberis,
+Cladocera,Ilyocryptus,Ilyocryptus,Ilyocryptus,
+Cladocera,Immature Cladoceran,Immature Cladoceran,,
+Cladocera,Kurzia,Kurzia,Kurzia,
+Cladocera,Leydigia,Leydigia,Leydigia,
+Cladocera,Macrothrix,Macrothrix,Macrothrix,
+Cladocera,Moina,Moina,Moina,
+Cladocera,Monospilus,Monospilus,Monospilus,
+Cladocera,Picripleuroxus,Picripleuroxus,Picripleuroxus,
+Cladocera,Pleuroxus,Pleuroxus,Pleuroxus,
+Cladocera,Pseudochydorus,Pseudochydorus,Pseudochydorus,
+Cladocera,Scaphloberis,Scaphloberis,Scaphloberis,
+Cladocera,Sida,Sida,Sida,
+Cladocera,Simocephalus,Simocephalus,Simocephalus,
+Cyclopoids,Acanthocyclops vernalis adult,Acanthocyclops vernalis,Acanthocyclops,Adult
+Cyclopoids,Acanthocyclops vernalis copepodid,Acanthocyclops vernalis,Acanthocyclops,Copepodid
+Cyclopoids,Cyclopoid adult,Cyclopoid,,Adult
+Cyclopoids,Cyclopoid copepodid,Cyclopoid,,Copepodid
+Cyclopoids,Diacyclops thomasi,Diacyclops thomasi,Diacyclops,
+Cyclopoids,Ectocyclops phaleratus,Ectocyclops phaleratus,Ectocyclops,
+Cyclopoids,Ergasilus sp.,Ergasilus sp.,Ergasilus,
+Cyclopoids,Eucyclops,Eucyclops,Eucyclops,
+Cyclopoids,Eucyclops agilis,Eucyclops agilis,Eucyclops,
+Cyclopoids,Eucyclops elegans,Eucyclops elegans,Eucyclops,
+Cyclopoids,Eucyclops pectinifer,Eucyclops pectinifer,Eucyclops,
+Cyclopoids,Eucyclops prionophorus,Eucyclops prionophorus,Eucyclops,
+Cyclopoids,Eucyclops sp.,Eucyclops sp.,Eucyclops,
+Cyclopoids,Eucyclops spp.,Eucyclops spp.,Eucyclops,
+Cyclopoids,Limnoithona copepodid,Limnoithona copepodid,Limnoithona,Copepodid
+Cyclopoids,Limnoithona sinensis,Limnoithona sinensis,Limnoithona,
+Cyclopoids,Limnoithona spp.,Limnoithona spp.,Limnoithona,
+Cyclopoids,Limnoithona tetraspina,Limnoithona tetraspina,Limnoithona,
+Cyclopoids,Macrocyclops albidus,Macrocyclops albidus,Macrocyclops,
+Cyclopoids,Macrocyclops sp.,Macrocyclops sp.,Macrocyclops,
+Cyclopoids,Macrocyclops spp.,Macrocyclops spp.,Macrocyclops,
+Cyclopoids,Mesocyclops edax,Mesocyclops edax,Mesocyclops,
+Cyclopoids,Microcyclops rubellus,Microcyclops rubellus,Microcyclops,
+Cyclopoids,Microcyclops spp.,Microcyclops spp.,Microcyclops,
+Cyclopoids,Monospilus,Monospilus,Monospilus,
+Cyclopoids,Monospilus sp.,Monospilus sp.,Monospilus,
+Cyclopoids,Oithona copepodid,Oithona copepodid,Oithona,
+Cyclopoids,Oithona davisae,Oithona davisae,Oithona,
+Cyclopoids,Oithona similis,Oithona similis,Oithona,
+Cyclopoids,Oithona spp.,Oithona spp.,Oithona,
+Cyclopoids,Paracyclops,Paracyclops,Paracyclops,
+Cyclopoids,Paracyclops chiltoni,Paracyclops chiltoni,Paracyclops,
+Cyclopoids,Paracyclops fimbriatus,Paracyclops fimbriatus,Paracyclops,
+Cyclopoids,Paracyclops poppei,Paracyclops poppei,Paracyclops,
+Cyclopoids,Paracyclops sp.,Paracyclops sp.,Paracyclops,
+Cyclopoids,Paracyclops spp.,Paracyclops spp.,Paracyclops,
+Cyclopoids,Tropocyclops prasinus,Tropocyclops prasinus,Tropocyclops,
+Cyclopoids,Tropocyclops sp.,Tropocyclops sp.,Tropocyclops,
+Harpacticoids,Harpacticoids,Harpacticoids,,
+Macrozooplankton,Americorophium,Americorophium,Americorophium,
+Macrozooplankton,Annelid,Annelid,,
+Macrozooplankton,Baby Clam,Baby Clam,,
+Macrozooplankton,Baby snail,Baby snail,,
+Macrozooplankton,Clam,Clam,,
+Macrozooplankton,Corophium spp.,Corophium spp.,Corophium,
+Macrozooplankton,Cumacean,Cumacean,,
+Macrozooplankton,Fish,Fish,,
+Macrozooplankton,Fish eggs,Fish eggs,,
+Macrozooplankton,Gammarus spp.,Gammarus spp.,Gammarus,
+Macrozooplankton,Insect larvae,Insect larvae,,
+Macrozooplankton,Isopod,Isopod,,
+Macrozooplankton,Larval Fish,Larval Fish,,
+Macrozooplankton,Mysids,Mysids,,
+Macrozooplankton,Shrimp,Shrimp,,
+Macrozooplankton,Snail,Snail,,
+Microzooplankton,Barnacles,Barnacles,,
+Microzooplankton,Copepod nauplii,Copepod nauplii,,
+Microzooplankton,Ostracods,Ostracods,,
+Microzooplankton,Rotifers,Rotifers,,

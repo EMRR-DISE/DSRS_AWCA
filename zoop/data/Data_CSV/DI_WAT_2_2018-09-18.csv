@@ -1,0 +1,9 @@
+sample,date,time,category,taxon,count,subsample,v1_ml,sub1_ml,v2_ml,sub2_ml
+DI_WAT_2,2018-09-18,15:48,MICROZOOPLANKTON & NAUPLII,Rotifers,16,1.0,37,3,37.0,2
+DI_WAT_2,2018-09-18,15:48,MICROZOOPLANKTON & NAUPLII,Copepod nauplii,386,1.0,37,3,37.0,2
+DI_WAT_2,2018-09-18,15:48,MICROZOOPLANKTON & NAUPLII,Ostracods,2,1.0,37,3,37.0,2
+DI_WAT_2,2018-09-18,15:48,CYCLOPOIDS,Cyclopoid copepodid,78,1.0,37,3,37.0,2
+DI_WAT_2,2018-09-18,15:48,CYCLOPOIDS,Limnoithona tetraspina,36,1.0,37,3,37.0,2
+DI_WAT_2,2018-09-18,15:48,CYCLOPOIDS,Microcyclops rubellus,2,1.0,37,3,37.0,2
+DI_WAT_2,2018-09-18,15:48,CALANOIDS,Calanoid copepodid,43,1.0,37,3,37.0,2
+DI_WAT_2,2018-09-18,15:48,CALANOIDS,Pseudodiaptomus forbesi adult,50,1.0,37,3,37.0,2

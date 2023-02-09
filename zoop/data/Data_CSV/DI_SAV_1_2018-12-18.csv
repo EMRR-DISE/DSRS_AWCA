@@ -1,0 +1,9 @@
+sample,date,time,category,taxon,count,subsample,v1_ml,sub1_ml,v2_ml,sub2_ml
+DI_SAV_1,2018-12-18,11:59,MICROZOOPLANKTON & NAUPLII,Rotifers,2.0,1.0,38,4,38.0,4
+DI_SAV_1,2018-12-18,11:59,MICROZOOPLANKTON & NAUPLII,Copepod nauplii,302.0,1.0,38,4,38.0,4
+DI_SAV_1,2018-12-18,11:59,CYCLOPOIDS,Cyclopoid copepodid,119.0,1.0,38,4,38.0,4
+DI_SAV_1,2018-12-18,11:59,CYCLOPOIDS,Limnoithona tetraspina,84.0,1.0,38,4,38.0,4
+DI_SAV_1,2018-12-18,11:59,CALANOIDS,Acartiella sinensis,6.0,1.0,38,4,38.0,4
+DI_SAV_1,2018-12-18,11:59,CALANOIDS,Calanoid copepodid,3.0,1.0,38,4,38.0,4
+DI_SAV_1,2018-12-18,11:59,CLADOCERA,Bosmina,3,1.0,38,4,38.0,4
+DI_SAV_1,2018-12-18,11:59,CLADOCERA,Chydorus,1,1.0,38,4,38.0,4

@@ -1,0 +1,81 @@
+"sample","date","time","category","taxon","count","subsamples","v1_ml","sub1_ml","v2_ml","sub2_ml"
+"LH-WAT-2",2017-08-02,"18:08","MICROZOOPLANKTON","Rotifers",96,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MICROZOOPLANKTON","Barnacles",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MICROZOOPLANKTON","Copepod nauplii",241,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MICROZOOPLANKTON","Ostracods",21,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Acanthocyclops vernalis adult",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Acanthocyclops vernalis copepodid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Cyclopoid adult",5,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Cyclopoid copepodid",13,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Diacyclops thomasi",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Ectocyclops phaleratus",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Eucyclops prionophorus",9,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Limnoithona copepodid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Limnoithona sinensis",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Limnoithona spp.",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Limnoithona tetraspina",2,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Mesocyclops edax",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Microcyclops rubellus",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Monospilus",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Oithona copepodid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Oithona davisae",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Oithona similis",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Oithona spp.",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CYCLOPOIDS","Paracyclops sp.",12,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Acartia copepodid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Acartia spp.",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Acartiella copepodid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Acartiella sinensis",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Calanoid copepodid",109,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Diaptomus copepodid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Diaptomus spp.",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Eurytemora affinis adult",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Eurytemora affinis copepodid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Osphranticum copepodid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Osphranticum labronectum",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Pseudodiaptomus forbesi adult",79,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Pseudodiaptomus forbesi copepodid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Sinocalanus doerrii adult",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Sinocalanus doerrii copepodid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Skistodiaptomus pallidus",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Tortanus copepodid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CALANOIDS","Tortanus spp.",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Alona",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Alonella",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Bosmina",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Camptocercus",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Ceriodaphnia",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Chydorus",10,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Daphnia",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Diaphanosoma",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Disparalona",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Eurycercus",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Graptoleberis",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Ilyocryptus",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Kurzia",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Macrothrix",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Moina",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Monospilus",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Picripleuroxus",4,1,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Pleuroxus",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Pseudochydorus",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Scaphloberis",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Sida",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","CLADOCERA","Simocephalus",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","HARPACTICOIDS","HARPACTICOIDS",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Americorophium",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Annelid",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Baby Clam",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Baby snail",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Clam",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Corophium spp.",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Cumacean",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Fish",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Fish eggs",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Gammarus spp.",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Insect larvae",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Isopod",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Larval Fish",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Mysids",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Shrimp",0,0,94,1,94,0.5
+"LH-WAT-2",2017-08-02,"18:08","MACROZOOPLANKTON","Snail",0,0,94,1,94,0.5

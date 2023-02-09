@@ -1,0 +1,7 @@
+sample,date,time,category,taxon,count,subsample,v1_ml,sub1_ml,v2_ml,sub2_ml
+USGS_8,2018-08-07,18:05,MICROZOOPLANKTON & NAUPLII,Rotifers,36.0,1.0,36,1.2,36.0,1.2
+USGS_8,2018-08-07,18:05,MICROZOOPLANKTON & NAUPLII,Copepod nauplii,322.0,1.0,36,1.2,36.0,1.2
+USGS_8,2018-08-07,18:05,MICROZOOPLANKTON & NAUPLII,Ostracods,3.0,1.0,36,1.2,36.0,1.2
+USGS_8,2018-08-07,18:05,CYCLOPOIDS,Cyclopoid copepodid,7.0,1.0,36,1.2,36.0,1.2
+USGS_8,2018-08-07,18:05,CYCLOPOIDS,Limnoithona tetraspina,2.0,1.0,36,1.2,36.0,1.2
+USGS_8,2018-08-07,18:05,CALANOIDS,Calanoid copepodid,316.0,1.0,36,1.2,36.0,1.2

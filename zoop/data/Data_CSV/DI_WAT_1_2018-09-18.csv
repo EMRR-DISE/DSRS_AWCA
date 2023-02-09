@@ -1,0 +1,11 @@
+sample,date,time,category,taxon,count,subsample,v1_ml,sub1_ml,v2_ml,sub2_ml
+DI_WAT_1,2018-09-18,15:35,MICROZOOPLANKTON & NAUPLII,Rotifers,4.0,1.0,36,2.7,36.0,0.7
+DI_WAT_1,2018-09-18,15:35,MICROZOOPLANKTON & NAUPLII,Copepod nauplii,309.0,1.0,36,2.7,36.0,0.7
+DI_WAT_1,2018-09-18,15:35,CYCLOPOIDS,Cyclopoid copepodid,44.0,1.0,36,2.7,36.0,0.7
+DI_WAT_1,2018-09-18,15:35,CYCLOPOIDS,Limnoithona tetraspina,86.0,1.0,36,2.7,36.0,0.7
+DI_WAT_1,2018-09-18,15:35,CALANOIDS,Calanoid copepodid,75.0,1.0,36,2.7,36.0,0.7
+DI_WAT_1,2018-09-18,15:35,CALANOIDS,Eurytemora affinis adult,1.0,1.0,36,2.7,36.0,0.7
+DI_WAT_1,2018-09-18,15:35,CALANOIDS,Pseudodiaptomus forbesi adult,1.0,1.0,36,2.7,36.0,0.7
+DI_WAT_1,2018-09-18,15:35,CLADOCERA,Bosmina,2,1.0,36,2.7,36.0,0.7
+DI_WAT_1,2018-09-18,15:35,CLADOCERA,Chydorus,1,1.0,36,2.7,36.0,0.7
+DI_WAT_1,2018-09-18,15:35,CLADOCERA,Diaphanosoma,1,1.0,36,2.7,36.0,0.7
