@@ -54,7 +54,11 @@ phytoplankton <- phyto_files %>%
 
 #read in taxonomy data
 #update this file with the updates/corrections I got from AlgaeBase 2/24/2022
-taxonomy <- read_csv("phyto/data_input/taxonomy/phyto_2018-12_taxonomy_complete.csv")
+taxonomy <- read_csv("phyto/data_input/other/phyto_2018-12_taxonomy_complete.csv")
+
+#read in sampling month data
+#use this to check for typos in sampling dates and also to assign survey months (samples aren't always taken with sampling month)
+sample_month <- read_csv("phyto/data_input/other/survey_months_complete.csv")
 
 #format the sample data set------------
 #NOTE: leave out derived columns (ie, calculated from other columns)
@@ -188,9 +192,34 @@ phyto_cleanest <- phyto_cleanest1 %>%
   select(-c(time1,time2,date_time_pst1)) %>% 
   glimpse()
 
-#look at station names
+#look for typos in station names
 unique(phyto_cleanest$station)
-#some clean up to do here; reference old code for more info
+#33 unique names; should only be 16 names (4 locations x 2 habitats x 2 reps)
+#inconsistent use of "-" and "_" in site names
+#Replace all occurrences of "-" with "_" in site names
+#also DI_SAV_1 was incorrectly called DI_SAV_18 in Dec. 2018
+
+phyto_cleaner <- phyto_cleanest %>% 
+  mutate(
+    #replace "-" with "_", which fixes most station name typos
+    station2 = str_replace_all(station, pattern = "-", replacement = "_")) %>% 
+  #drop old station column
+  select(-station) %>% 
+  #fix DI_SAV_18 typo
+  mutate(station = case_when(station2 == "DI_SAV_18"~ "DI_SAV_1",TRUE~station2)) %>% 
+  #drop unneeded station column
+  select(-station2) %>% 
+  #move up new station column
+  relocate(station,.after = time) %>% 
+  glimpse()
+  
+#check for typos in station names again
+unique(phyto_cleaner$station)
+#now 16 station names as expected
+
+#look for typos in sampling date and add column for sampling month
+
+
 
 #look at number of samples per station
 samp_count<-phyto_cleanest %>% 
