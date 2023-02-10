@@ -60,7 +60,11 @@ taxonomy <- read_csv("phyto/data_input/taxonomy/phyto_2018-12_taxonomy_complete.
 #NOTE: leave out derived columns (ie, calculated from other columns)
 #then do calculations myself to minimize risk of errors
 
-phyto_cleanest <- phytoplankton %>% 
+phyto_cleanest1 <- phytoplankton %>% 
+  #remove empty rows created by linear cell measurement rows (length, width, depth)  
+  #a little tricky just because the survey name appears in every row including the otherwise empty ones
+  #chose the taxon column as the ones to check for missing data
+  drop_na(taxon) %>%
   #rename the confusingly incorrectly name column
   rename(total_cells=number_of_cells_per_unit) %>% 
   #subset to just the needed columns
@@ -92,14 +96,14 @@ phyto_cleanest <- phytoplankton %>%
   mutate(
     #change some columns from text to numeric
     across(c(volume_received_m_l:bsa_tin,unit_abundance:gald,biovolume_1:biovolume_10), as.numeric)
-    #change station from character to factor
+    #change some columns from character to factor
     ,across(c(station,phyto_form,taxonomist),as.factor)
     #format date; check date and time against input files to see if formatting worked correctly
     ,date = as.Date(as.numeric(sample_date),origin = "1899-12-30")
     #format time
-    ,time = as_hms(as.numeric(sample_time)*60*60*24)
+    ,time1 = as_hms(as.numeric(sample_time)*60*60*24)
     #create a date time column; not sure this is pst; might be pdt
-    ,date_time_pst = ymd_hms(as.character(paste(date, time)),tz="Etc/GMT+8")
+    ,date_time_pst1 = ymd_hms(as.character(paste(date, time1)),tz="Etc/GMT+8")
     #calculate percent of sample volume analyzed
     ,volume_analyzed_prop = volume_received_m_l/volume_analyzed_m_l
     #create new column that calculates mean biovolume per cell
@@ -120,14 +124,14 @@ phyto_cleanest <- phytoplankton %>%
   )  %>% 
   select(file_name
          ,date
-         ,time
-         ,date_time_pst
+         ,time1
+         ,date_time_pst1
          ,station 
          ,volume_analyzed_m_l #needed
          ,volume_analyzed_prop
          ,field_of_view_mm2 #needed
          ,slide_chamber_area_mm2 #needed
-         ,area_counted #derived column?
+         #,area_counted #derived column
          ,number_of_fields_counted #needed
          ,bsa_tin #keep for now; will make filtering by taxa a little easier 
          ,taxon
@@ -137,19 +141,52 @@ phyto_cleanest <- phytoplankton %>%
          ,synonym
          ,unit_abundance #needed
          ,total_cells #needed
-         ,gald #probably optional
+         ,gald #possibly useful to some users
          ,phyto_form 
          ,taxonomist #useful for look at potential ID biases
          ,comments #need to look at these before consider dropping this column
          ,organisms_per_ml
          ,cells_per_ml
          ,biovolume_per_ml
+         ,mean_cell_biovolume #decided this is useful to users
   ) %>% 
   glimpse()
 #I prefer to use the formulas based on the more raw version of the data 
 #rather than the ones based on the factor column
 #which is a derived column and therefore more prone to errors
-#NOTE: 674 failed to parse for date_time_pst; figure out why; NAs?
+#NOTE: 27 failed to parse for date_time_pst; figure out why; NAs?
+
+#investigate date/time issues
+dt_parse <- phyto_cleanest1 %>% 
+  filter(is.na(date_time_pst1)) %>% 
+  distinct(date,station) %>%
+  arrange(date,station) %>% 
+  glimpse()
+#some missing times
+
+#create small dataframe that adds missing times from companion zoop data files
+times_corr <- dt_parse %>% 
+  distinct(date,station) %>%
+  add_column(time = c("8:40:00","13:52:00","14:15:00","14:15:00","14:30:00")) %>% 
+  mutate(time2=as_hms(time))%>% 
+  select(-time) %>% 
+  glimpse()
+
+#fill in missing times
+phyto_cleanest <- phyto_cleanest1 %>%
+  #add times as a new column
+  left_join(times_corr) %>% 
+  mutate(
+    #create new time column with all times present
+    time = case_when(is.na(time1)~time2,TRUE~time1)
+    #redo date-time column; not sure this is pst; might be pdt
+  ,date_time_pst = ymd_hms(as.character(paste(date, time)),tz="Etc/GMT+8")
+  ) %>% 
+  #move up new time column
+  relocate(time:date_time_pst,.after = date) %>% 
+  #drop old time and date-time columns
+  select(-c(time1,time2,date_time_pst1)) %>% 
+  glimpse()
 
 #look at station names
 unique(phyto_cleanest$station)
