@@ -64,7 +64,7 @@ sample_month <- read_csv("phyto/data_input/other/survey_months_complete.csv")
 #NOTE: leave out derived columns (ie, calculated from other columns)
 #then do calculations myself to minimize risk of errors
 
-phyto_cleanest1 <- phytoplankton %>% 
+phyto_clean <- phytoplankton %>% 
   #remove empty rows created by linear cell measurement rows (length, width, depth)  
   #a little tricky just because the survey name appears in every row including the otherwise empty ones
   #chose the taxon column as the ones to check for missing data
@@ -103,11 +103,9 @@ phyto_cleanest1 <- phytoplankton %>%
     #change some columns from character to factor
     ,across(c(station,phyto_form,taxonomist),as.factor)
     #format date; check date and time against input files to see if formatting worked correctly
-    ,date = as.Date(as.numeric(sample_date),origin = "1899-12-30")
+    ,date1 = as.Date(as.numeric(sample_date),origin = "1899-12-30")
     #format time
     ,time1 = as_hms(as.numeric(sample_time)*60*60*24)
-    #create a date time column; not sure this is pst; might be pdt
-    ,date_time_pst1 = ymd_hms(as.character(paste(date, time1)),tz="Etc/GMT+8")
     #calculate percent of sample volume analyzed
     ,volume_analyzed_prop = volume_received_m_l/volume_analyzed_m_l
     #create new column that calculates mean biovolume per cell
@@ -127,9 +125,8 @@ phyto_cleanest1 <- phytoplankton %>%
     #,biovolume_per_ml_easy = factor * total_cells * mean_cell_biovolume
   )  %>% 
   select(file_name
-         ,date
+         ,date1
          ,time1
-         ,date_time_pst1
          ,station 
          ,volume_analyzed_m_l #needed
          ,volume_analyzed_prop
@@ -160,46 +157,14 @@ phyto_cleanest1 <- phytoplankton %>%
 #which is a derived column and therefore more prone to errors
 #NOTE: 27 failed to parse for date_time_pst; figure out why; NAs?
 
-#investigate date/time issues
-dt_parse <- phyto_cleanest1 %>% 
-  filter(is.na(date_time_pst1)) %>% 
-  distinct(date,station) %>%
-  arrange(date,station) %>% 
-  glimpse()
-#some missing times
-
-#create small dataframe that adds missing times from companion zoop data files
-times_corr <- dt_parse %>% 
-  distinct(date,station) %>%
-  add_column(time = c("8:40:00","13:52:00","14:15:00","14:15:00","14:30:00")) %>% 
-  mutate(time2=as_hms(time))%>% 
-  select(-time) %>% 
-  glimpse()
-
-#fill in missing times
-phyto_cleanest <- phyto_cleanest1 %>%
-  #add times as a new column
-  left_join(times_corr) %>% 
-  mutate(
-    #create new time column with all times present
-    time = case_when(is.na(time1)~time2,TRUE~time1)
-    #redo date-time column; not sure this is pst; might be pdt
-  ,date_time_pst = ymd_hms(as.character(paste(date, time)),tz="Etc/GMT+8")
-  ) %>% 
-  #move up new time column
-  relocate(time:date_time_pst,.after = date) %>% 
-  #drop old time and date-time columns
-  select(-c(time1,time2,date_time_pst1)) %>% 
-  glimpse()
-
 #look for typos in station names
-unique(phyto_cleanest$station)
+unique(phyto_clean$station)
 #33 unique names; should only be 16 names (4 locations x 2 habitats x 2 reps)
 #inconsistent use of "-" and "_" in site names
 #Replace all occurrences of "-" with "_" in site names
 #also DI_SAV_1 was incorrectly called DI_SAV_18 in Dec. 2018
 
-phyto_cleaner <- phyto_cleanest %>% 
+phyto_cleaner <- phyto_clean %>% 
   mutate(
     #replace "-" with "_", which fixes most station name typos
     station2 = str_replace_all(station, pattern = "-", replacement = "_")) %>% 
@@ -210,16 +175,96 @@ phyto_cleaner <- phyto_cleanest %>%
   #drop unneeded station column
   select(-station2) %>% 
   #move up new station column
-  relocate(station,.after = time) %>% 
+  relocate(station,.after = time1) %>% 
   glimpse()
-  
+
 #check for typos in station names again
 unique(phyto_cleaner$station)
 #now 16 station names as expected
 
-#look for typos in sampling date and add column for sampling month
+#investigate missing times
+dt_parse <- phyto_cleaner%>% 
+  filter(is.na(time1)) %>% 
+  distinct(date1,station) %>%
+  arrange(date1,station) %>% 
+  glimpse()
+#5 missing times
 
+#create small dataframe that adds missing times from companion zoop data files
+times_corr <- dt_parse %>% 
+  distinct(date1,station) %>%
+  add_column(time = c("8:40:00","13:52:00","14:15:00","14:15:00","14:30:00")) %>% 
+  mutate(time2=as_hms(time))%>% 
+  select(-time) %>% 
+  glimpse()
 
+#also look for typos in sampling date and add column for sampling month
+
+#first format the sample month df
+smonth <- sample_month %>% 
+  rename(station = site
+         ,date1 = date) %>% 
+  glimpse()
+
+#now look for date typos
+dtypo <- anti_join(phyto_cleaner,smonth) %>% 
+  distinct(date1,station) %>% 
+  arrange(date1,station)
+#6 non-matching station-date combos
+#but just three incorrect dates
+
+#fill in missing times and fix date typos
+phyto_cleanest <- phyto_cleaner %>%
+  #add times as a new column
+  left_join(times_corr) %>% 
+  mutate(
+    #create new time column with all times present
+    time = case_when(is.na(time1)~time2,TRUE~time1)
+    #correct date typos
+    ,date = case_when(date1 == as_date("2018-03-13") ~ as_date("2018-03-14")
+                       ,date1 == as_date("2018-04-16") ~ as_date("2018-04-17")
+                       ,date1 == as_date("2018-10-10") ~ as_date("2018-10-16")
+                      ,TRUE~date1)
+    #add date-time column; not sure this is pst; might be pdt
+  ,date_time_pst = ymd_hms(as.character(paste(date, time)),tz="Etc/GMT+8")
+  ) %>% 
+  #move up new time column
+  relocate(c(date,time,date_time_pst),.after = date1) %>% 
+  #drop old time and date-time columns
+  select(-c(time1,time2,date1)) %>% 
+  glimpse()
+
+#look for date typos again
+dtypo2 <- anti_join(phyto_cleanest,smonth) %>% 
+  distinct(date,station) %>% 
+  arrange(date,station)
+#all are now corrected
+
+#check a specific date example
+dypos3 <- phyto_cleanest %>% 
+  filter(date==as_date("2018-03-14")) %>% 
+  distinct(date,station)
+#incorrect date was replaced with correct date
+
+#look for missing times again
+dt_parse2 <- phyto_cleanest%>% 
+  filter(is.na(time)) %>% 
+  distinct(date,station) %>%
+  arrange(date,station) %>% 
+  glimpse()
+#no missing times now
+
+#check a specific time example
+dt_parse3 <- phyto_cleanest %>% 
+  filter(station =="LH_WAT_2" & date==as_date("2017-06-29")) %>% 
+  distinct(date,station,time)
+#missing time was replaced with correct time
+
+#check for NAs in date-time
+dt_parse4 <- phyto_cleanest %>% 
+  filter(is.na(date_time_pst)) %>% 
+  distinct(date,station)
+#no NAs for date-time
 
 #look at number of samples per station
 samp_count<-phyto_cleanest %>% 
@@ -240,10 +285,7 @@ range(phyto_cleanest$area_counted,na.rm = T) #0.3415 1.5709, somewhat large rang
 hist(phyto_cleanest$volume_analyzed_m_l)
 
 
-#check for NAs
-#check_na <- phyto_cleanest[rowSums(is.na(phyto_cleanest)) > 0,]
-#most are just missing time, which is fine because time not always recorded
-#could look up fish survey data to get times for some of these
+
 
 #Add higher level taxonomic information using the algaeClassify package--------
 #as of 3/4/2022 this package wasn't working
