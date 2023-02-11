@@ -95,6 +95,7 @@ phyto_clean <- phytoplankton %>%
          ,phyto_form = colony_filament_individual_group_code
          ,taxonomist #useful for look at potential ID biases
          ,comments #need to look at these before consider dropping this column
+         ,shape
          ,biovolume_1:biovolume_10 #needed
          ) %>% 
   mutate(
@@ -132,7 +133,7 @@ phyto_clean <- phytoplankton %>%
          ,volume_analyzed_prop
          ,field_of_view_mm2 #needed
          ,slide_chamber_area_mm2 #needed
-         #,area_counted #derived column
+         ,area_counted #derived column
          ,number_of_fields_counted #needed
          ,bsa_tin #keep for now; will make filtering by taxa a little easier 
          ,taxon
@@ -146,6 +147,7 @@ phyto_clean <- phytoplankton %>%
          ,phyto_form 
          ,taxonomist #useful for look at potential ID biases
          ,comments #need to look at these before consider dropping this column
+         ,shape
          ,organisms_per_ml
          ,cells_per_ml
          ,biovolume_per_ml
@@ -213,6 +215,11 @@ dtypo <- anti_join(phyto_cleaner,smonth) %>%
 #6 non-matching station-date combos
 #but just three incorrect dates
 
+#format the sample month df again
+smonth2 <- smonth %>% 
+  rename(date = date1) %>% 
+  glimpse()
+
 #fill in missing times and fix date typos
 phyto_cleanest <- phyto_cleaner %>%
   #add times as a new column
@@ -232,10 +239,14 @@ phyto_cleanest <- phyto_cleaner %>%
   relocate(c(date,time,date_time_pst),.after = date1) %>% 
   #drop old time and date-time columns
   select(-c(time1,time2,date1)) %>% 
+  #add columns from sample month dataframe
+  left_join(smonth2) %>% 
+  #move up the added columns
+  relocate(island:s_month,.after = station) %>% 
   glimpse()
 
 #look for date typos again
-dtypo2 <- anti_join(phyto_cleanest,smonth) %>% 
+dtypo2 <- anti_join(phyto_cleanest,smonth2) %>% 
   distinct(date,station) %>% 
   arrange(date,station)
 #all are now corrected
@@ -271,8 +282,7 @@ samp_count<-phyto_cleanest %>%
   distinct(station, date) %>% 
   group_by(station) %>% 
   summarize(count = n())
-#need to look into this some more
-#one case of NA for station which shouldn't be
+#quick glance; looks pretty good
 
 #look at ranges of some of the raw data columns to decide 
 #whether to retain in dataset or just describe in metadata
@@ -284,7 +294,47 @@ range(phyto_cleanest$area_counted,na.rm = T) #0.3415 1.5709, somewhat large rang
 
 hist(phyto_cleanest$volume_analyzed_m_l)
 
+#look at taxonomist comments
+phyto_cleanest_t <- phyto_cleanest %>% 
+  distinct(comments) %>% 
+  #distinct(station,date_time_pst,comments) %>% 
+  arrange(comments)
+#a few types of comments
+#most are about the amount of debris in samples
+#the rest indicate that individual is broken or degraded
+#EMP included quality check column indicating good, fragmented, degraded
+#so I could do that too
 
+#continued data formatting
+#replace comments column with quality check column
+#drop some unneeded columns, rename some columns, reorder columns
+phyto_format <- phyto_cleanest %>% 
+  select(
+    date
+    ,time
+    ,date_time_pst
+    ,survey_year_month = month_survey
+    ,survey_year = s_year
+    ,survey_month = s_month
+    ,site = island
+    ,stratum
+    ,station
+    ,bsa_tin 
+    ,name = taxon
+    ,diatom_soft_body
+    ,genus
+    ,species
+    ,synonym
+    ,organisms_per_ml
+    ,cells_per_ml
+    ,mean_cell_biovolume
+    ,biovolume_per_ml
+    ,gald
+    ,phyto_form
+    ,shape
+    ,comments
+  ) %>% 
+  glimpse()
 
 
 #Add higher level taxonomic information using the algaeClassify package--------
