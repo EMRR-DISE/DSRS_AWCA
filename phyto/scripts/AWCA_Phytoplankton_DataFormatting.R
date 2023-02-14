@@ -8,7 +8,7 @@ library(tidyverse) #suite of data science tools
 library(janitor) #functions for cleaning up data sets
 library(hms) #working with date/time
 library(lubridate) #working with dates
-library(readxl) #importing data from excel files
+library(readxl) #importing data from excel file
 
 #Notes
 #For all BSA files from 2013 to 2021, the column "Number of cells per unit" really means "Total cells", 
@@ -57,6 +57,10 @@ emp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1
 #read in taxonomy data
 #update this file with the updates/corrections I got from AlgaeBase 2/24/2022
 taxonomy <- read_csv("phyto/data_input/other/phyto_2018-12_taxonomy_complete.csv")
+
+#read in taxonomic info requested from AlgaeBase last year
+algaebase <- read_excel("phyto/data_input/other/Rasmussen_AlgaeBase_2022-02-24.xlsx") %>% 
+  clean_names()
 
 #read in sampling month data
 #use this to check for typos in sampling dates and also to assign survey months (samples aren't always taken with sampling month)
@@ -402,7 +406,27 @@ tax_mism2 <- anti_join(tax_awca2,tax_emp) %>%
 #28 mismatches
 #over half are "cf." taxa; check to see if there are genus level matches at least
 #some are taxa that should probably be dropped because they aren't phyto (cf. Amoeba sp.)
-#some of these could be from name changes (eg, Chroococcus microscopicus)
+#some of these could be from name changes (eg, Chroococcus microscopicus should be Eucapsis microscopica)
+
+#how common are these mistmatching taxa?
+
+#first make vector of names to use in search
+tax_mism2_vect <- tax_mism2 %>% 
+  pull(name)
+
+tax_mism_count <- phyto_format %>% 
+  filter(name %in% tax_mism2_vect) %>%
+  group_by(genus,species,name) %>% 
+  count() %>% 
+  arrange(-n)
+#all but six taxa are present in fewer than five samples
+#check algae base taxonomy for updates
+#Chroococcus microscopicus = Eucapsis microscopica
+#Plagioselmis prolonga (and cf. Plagioselmis prolonga) = Teleaulax amphioxeia
+#Rhodomonas lacustris = Plagioselmis lacustris
+
+#export mismatch taxa to discuss with Tiffany and Sarah P
+write_csv(tax_mism_count,"./phyto/data_input/other/phyto_taxonomy_mismatch.csv")
 
 #look for genus level matches in EMP data set for mismatching taxa
 mismatch_gn <- tax_mism2 %>% 
@@ -419,6 +443,13 @@ tax_emp_gn <- tax_emp %>%
 tax_mism_gn <- anti_join(mismatch_gn,tax_emp_gn) %>%  
   arrange(genus)
 #just three genera didn't match with EMP: "Amoeba","Pedinomonas","Strobilidium"
+#should probably drop "Amoeba", "Strobilidium"; I don' think they are photosynthetic
+#Pedinomonas" is a green algae; maybe EMP just doesn't ever get it
+
+#look closer at records with these three taxa
+tax_mism_gn_detail <- phyto_format %>% 
+  filter(genus %in% tax_mism_gn) %>% 
+  arrange(genus, station, date_time_pst)
 
 #EMP has two different classes for Achnanthidium
 #two different phyla for Gomphonema and Nitzschia
