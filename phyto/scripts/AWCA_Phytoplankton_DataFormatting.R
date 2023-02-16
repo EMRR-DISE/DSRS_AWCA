@@ -17,7 +17,7 @@ library(readxl) #importing data from excel file
 
 #To do list------------------
 #look at Sarah Perry's code for assembling and publishing phyto data set
-#is time in PST or PDT? I think the latter but need to check; it might even have changed over time
+#Time is PDT so I need to fix that; currently it's in PST
 #should check to see if organisms per ml and cells per ml are equal for cases where phyto_form = individual
 #move analysis and most plotting to a different script
 #use biovolume to calculate biomass
@@ -66,6 +66,9 @@ algaebase <- read_excel("phyto/data_input/other/Rasmussen_AlgaeBase_2022-02-24.x
 #use this to check for typos in sampling dates and also to assign survey months (samples aren't always taken with sampling month)
 sample_month <- read_csv("phyto/data_input/other/survey_months_complete.csv")
 
+#read in some corrections to make to the taxonomy
+taxonomy_fix <- read_csv("phyto/data_input/other/phyto_taxonomy_mismatch_fixed.csv")
+
 #explore EMP data set--------------
 
 #create taxonomy data set from EMP data to compare with my sample taxa
@@ -73,11 +76,46 @@ tax_emp <- emp %>%
   distinct(name, kingdom, phylum, class, algal_group, genus, species) %>% 
   glimpse()
 
+#look at synonyms
+tax_emp_syn <- emp %>%
+  distinct(name, orig_name, kingdom, phylum, class, algal_group, genus, species) %>% 
+  filter(!is.na(orig_name)) %>% 
+  arrange(orig_name, genus, species)
+#all the outdated names in my dataset are present as orig_names in EMP data set with updated names in name
+#exception: EMP has my outdated name for Achnanthidium exiguum but updates it to another outdated name Lemnicola exigua instead of updated name Gogorevia exilis  
+
 #are there any cases with "spp."?
 #my data set has some of these
 tax_emp_spp <- tax_emp %>% 
   filter(species=="spp." | species=="spp")
 #no, always "sp." which seems reasonable
+
+#explore and format the dataset I had updated by AlgaeBase----------
+#I think this was probably the full set of taxa from Tiffany's EMP database
+#NOTE: the higher level taxonomy is based on my original names, not the updated ones
+#NOTE: have some clean up to do still if using this taxonomy
+#eg, cases where "your name" is blank because there are multiple higher taxonomy matches for some taxa
+#presumably one of these matches is either an error or outdated
+
+#format the data set to compare the genera to the genera in the AWCA data set
+tax_ab <- algaebase %>% 
+  select(taxon_orig = your_names_in_the_same_orfer
+         ,taxon_match = name_in_ab
+         ,taxon_new = accepted_name_in_ab_if_different
+         ,genus = genus_name
+         ,empire = genera_empire
+         ,kingdom = genera_kingdom
+         ,phylum = genera_phylum
+         ,class = genera_class
+         ,order = genera_order
+         ,family = genera_family
+         ) %>% 
+  glimpse()
+
+#also create a version with the old names (but keep the new names column)
+#create new column that has names with "cf."
+#then separate genus from rest of name. genus will be used to compare with AWCA
+#convert wide to long, only keep and add column indicating old vers
 
 #format the AWCA sample data set------------
 #NOTE: leave out derived columns (ie, calculated from other columns)
@@ -426,7 +464,7 @@ tax_mism_count <- phyto_format %>%
 #Rhodomonas lacustris = Plagioselmis lacustris
 
 #export mismatch taxa to discuss with Tiffany and Sarah P
-write_csv(tax_mism_count,"./phyto/data_input/other/phyto_taxonomy_mismatch.csv")
+#write_csv(tax_mism_count,"./phyto/data_input/other/phyto_taxonomy_mismatch.csv")
 
 #look for genus level matches in EMP data set for mismatching taxa
 mismatch_gn <- tax_mism2 %>% 
@@ -455,9 +493,16 @@ tax_mism_gn_detail <- phyto_format %>%
 #two different phyla for Gomphonema and Nitzschia
 #these are just the redundancies in this subset of mismatches; could be more in full EMP data set 
 
-
-
 #we got 21 matches, so even though there are some species level differences, perhaps there aren't genus level ones
+
+#compare taxa between AWCA and the taxonomy I had updated by AlgaeBase-----------------
+
+#look at non-matches based on genus
+tax_mism_ab <- anti_join(tax_awca,tax_ab)
+#only 4 mismatches
+#three are same mismatches as with EMP (unsurprisingly): "Amoeba","Pedinomonas","Strobilidium"
+#Coelastrum is fourth mismatch (ie, Coelastrum microporum); maybe this was just missing from old EMP database I had; not an outdated name
+
 
 #add taxonomy info to AWCA data set---------------------
 

@@ -1,0 +1,29 @@
+genus,species,name,number of records,problem,solution,genus_new,species_new,name_new,notes
+Amoeba,sp.,cf. Amoeba sp.,1,not phyto,delete,,,,
+Strobilidium,sp.,Strobilidium sp.,3,not phyto,delete,,,,
+Achnanthidium,catenatum,Achnanthidium catenatum,4,probably fine,,,,,not a synonym
+Ankistrodesmus,sp.,cf. Ankistrodesmus sp.,1,probably fine,,,,,not a synonym
+Chlorella,sp.,cf. Chlorella sp.,25,probably fine,,,,,not a synonym
+Chroomonas,nordstedtii,cf. Chroomonas nordstedtii,1,probably fine,,,,,not a synonym
+Cocconeis,pediculus,Cocconeis cf. pediculus,1,probably fine,,,,,not a synonym
+Gomphonema,augur,Gomphonema augur,1,probably fine,,,,,not a synonym
+Kirchneriella,sp.,cf. Kirchneriella sp.,1,probably fine,,,,,not a synonym
+Leptolyngbya,sp.,cf. Leptolyngbya sp.,1,probably fine,,,,,not a synonym
+Licmophora,sp.,cf. Licmophora sp.,1,probably fine,,,,,not a synonym
+Nitzschia,agnita,Nitzschia cf. agnita,2,probably fine,,,,,not a synonym
+Pedinomonas,sp.,cf. Pedinomonas sp.,2,probably fine,,,,,not a synonym
+Pseudanabaena,galeata,Pseudanabaena cf. galeata,3,probably fine,,,,,not a synonym
+Pyramimonas,sp.,cf. Pyramimonas sp.,1,probably fine,,,,,not a synonym
+Rhoicosphenia,sp.,cf. Rhoicosphenia sp.,1,probably fine,,,,,not a synonym
+Westella,botryoides,cf. Westella botryoides,2,probably fine,,,,,not a synonym
+Westella,sp.,cf. Westella sp.,1,probably fine,,,,,not a synonym
+Achnanthidium,exiguum,Achnanthidium exiguum,1,synonym,update,Gogorevia,exilis,Gogorevia exilis ,EMP data set has different outdated name Lemnicola exigua
+Chroococcus,microscopicus,Chroococcus microscopicus,226,synonym,update,Eucapsis,microscopica,Eucapsis microscopica,EMP has correct updated name
+Chroomonas,rosenbergii,cf. Chroomonas rosenbergii,3,synonym,update,Chroomonas,coerulea,Chroomonas coerulea,EMP has correct updated name
+Geissleria,decussis,Geissleria decussis,2,synonym,update,Navigeia,decussis,Navigeia decussis ,EMP has correct updated name
+Plagioselmis,prolonga,cf. Plagioselmis prolonga,28,synonym,update,Teleaulax,amphioxeia,cf. Teleaulax amphioxeia,EMP has correct updated name
+Plagioselmis,prolonga,Plagioselmis cf. prolonga,9,synonym,update,Teleaulax,amphioxeia,Teleaulax cf. amphioxeia,EMP has correct updated name
+Plagioselmis,prolonga,Plagioselmis prolonga,111,synonym,update,Teleaulax,amphioxeia,Teleaulax amphioxeia,EMP has correct updated name
+Rhodomonas,lacustris,cf. Rhodomonas lacustris,4,synonym,update,Plagioselmis,lacustris,cf. Plagioselmis lacustris,EMP has correct updated name
+Rhodomonas,lacustris,Rhodomonas lacustris,19,synonym,update,Plagioselmis,lacustris,Plagioselmis lacustris,EMP has correct updated name
+Rhodomonas,sp.,cf. Rhodomonas sp.,2,synonym,update,Plagioselmis,sp.,cf. Plagioselmis sp.,EMP has correct updated name
