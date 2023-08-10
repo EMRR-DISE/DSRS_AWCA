@@ -51,7 +51,7 @@ phytoplankton <- phyto_files %>%
 # Read in the other files----------------
 
 #read in EMP data from EDI
-emp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1320.3&entityid=1eee2c2a562a5b856398082c487dc1a7") %>% 
+emp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1320.5&entityid=67b9d4ee30d5eee6e74b2300426471f9") %>% 
   clean_names()
 
 #read in taxonomy data
@@ -179,7 +179,7 @@ phyto_clean <- phytoplankton %>%
     #create a column that calculates biovolume per mL
     #units for biovolume are cubic microns; old version is incorrect calculations; round number to nearest tenth
     #,biovolume_per_ml_old = organisms_per_ml * total_cells * mean_cell_biovolume
-    ,biovolume_per_ml = round((total_cells* mean_cell_biovolume*slide_chamber_area_mm2)/(volume_analyzed_m_l*field_of_view_mm2*number_of_fields_counted),1)
+    ,biovolume_cubic_micron_per_ml = round((total_cells* mean_cell_biovolume*slide_chamber_area_mm2)/(volume_analyzed_m_l*field_of_view_mm2*number_of_fields_counted),1)
     #,biovolume_per_ml_easy = factor * total_cells * mean_cell_biovolume
   )  %>% 
   select(file_name
@@ -187,10 +187,10 @@ phyto_clean <- phytoplankton %>%
          ,time1
          ,station 
          ,volume_analyzed_m_l #needed
-         ,volume_analyzed_prop
+         #,volume_analyzed_prop
          ,field_of_view_mm2 #needed
          ,slide_chamber_area_mm2 #needed
-         ,area_counted #derived column
+         #,area_counted #derived column
          ,number_of_fields_counted #needed
          ,bsa_tin #keep for now; will make filtering by taxa a little easier 
          ,taxon
@@ -202,19 +202,18 @@ phyto_clean <- phytoplankton %>%
          ,total_cells #needed
          ,gald #possibly useful to some users
          ,phyto_form 
-         ,taxonomist #useful for look at potential ID biases
+         #,taxonomist #useful for look at potential ID biases
          ,comments #need to look at these before consider dropping this column
-         ,shape
+         #,shape
          ,organisms_per_ml
          ,cells_per_ml
-         ,biovolume_per_ml
-         ,mean_cell_biovolume #decided this is useful to users
+         ,biovolume_cubic_micron_per_ml
+         #,mean_cell_biovolume #decided this is useful to users
   ) %>% 
   glimpse()
 #I prefer to use the formulas based on the more raw version of the data 
 #rather than the ones based on the factor column
 #which is a derived column and therefore more prone to errors
-#NOTE: 27 failed to parse for date_time_pst; figure out why; NAs?
 
 #look for typos in station names
 unique(phyto_clean$station)
@@ -289,11 +288,12 @@ phyto_cleanest <- phyto_cleaner %>%
                        ,date1 == as_date("2018-04-16") ~ as_date("2018-04-17")
                        ,date1 == as_date("2018-10-10") ~ as_date("2018-10-16")
                       ,TRUE~date1)
-    #add date-time column; not sure this is pst; might be pdt
-  ,date_time_pst = ymd_hms(as.character(paste(date, time)),tz="Etc/GMT+8")
-  ) %>% 
+  #add date-time column; pretty sure we used PDT for all the biological data
+  #,date_time_pst = ymd_hms(as.character(paste(date, time)),tz="Etc/GMT+8")
+  ,date_time_pdt = ymd_hms(as.character(paste(date, time)),tz="America/Los_Angeles")
+  )  %>% 
   #move up new time column
-  relocate(c(date,time,date_time_pst),.after = date1) %>% 
+  relocate(c(date,time,date_time_pdt),.after = date1) %>% 
   #drop old time and date-time columns
   select(-c(time1,time2,date1)) %>% 
   #add columns from sample month dataframe
@@ -301,6 +301,10 @@ phyto_cleanest <- phyto_cleaner %>%
   #move up the added columns
   relocate(island:s_month,.after = station) %>% 
   glimpse()
+
+#check time zone
+tz(phyto_cleanest$date_time_pdt)
+#looks good - "America/Los_Angeles"
 
 #look for date typos again
 dtypo2 <- anti_join(phyto_cleanest,smonth2) %>% 
@@ -330,7 +334,7 @@ dt_parse3 <- phyto_cleanest %>%
 
 #check for NAs in date-time
 dt_parse4 <- phyto_cleanest %>% 
-  filter(is.na(date_time_pst)) %>% 
+  filter(is.na(date_time_pdt)) %>% 
   distinct(date,station)
 #no NAs for date-time
 
@@ -347,20 +351,27 @@ samp_count<-phyto_cleanest %>%
 range(phyto_cleanest$volume_analyzed_m_l,na.rm = T) #1-10; pretty wide range
 range(phyto_cleanest$field_of_view_mm2,na.rm = T) #0.0683000 0.0697465; pretty narrow
 range(phyto_cleanest$slide_chamber_area_mm2,na.rm = T) #314.159 314.159
-range(phyto_cleanest$area_counted,na.rm = T) #0.3415 1.5709, somewhat large range
+#range(phyto_cleanest$area_counted,na.rm = T) #0.3415 1.5709, somewhat large range
 
 hist(phyto_cleanest$volume_analyzed_m_l)
 
 #look at taxonomist comments
 phyto_cleanest_t <- phyto_cleanest %>% 
   distinct(comments) %>% 
-  #distinct(station,date_time_pst,comments) %>% 
+  #distinct(station,date_time_pdt,comments) %>% 
   arrange(comments)
 #a few types of comments
 #most are about the amount of debris in samples
 #the rest indicate that individual is broken or degraded
-#EMP included quality check column indicating good, fragmented, degraded
-#so I could do that too
+#some of the comments indicate there are broken diatoms. Does that mean they didn't try to ID any of them?
+
+#write file with all comments
+#write_csv(phyto_cleanest_t, "./phyto/data_output/phyto_comments.csv")
+
+#are there cases where diatoms are IDed and there is a note about broken diatoms?
+diatom_broken <- phyto_cleanest %>% 
+  filter(diatom_soft_body=="Diatom" & grepl("broken|Broken",comments))
+#yes, so the broken diatoms probably impacted ID but didn't completely prevent diatom ID in a sample
 
 #look at synonyms
 syn <- phyto_cleanest %>% 
@@ -373,37 +384,48 @@ syn <- phyto_cleanest %>%
 #drop some unneeded columns, rename some columns, reorder columns
 phyto_format <- phyto_cleanest %>% 
   select(
-    date
-    ,time
-    ,date_time_pst
-    ,survey_year_month = month_survey
-    ,survey_year = s_year
-    ,survey_month = s_month
+    station
     ,site = island
     ,stratum
-    ,station
-    ,bsa_tin 
-    ,name = taxon
-    ,diatom_soft_body
+    ,date
+    ,time
+    ,date_time_pdt
+    #,survey_year_month = month_survey
+    ,survey_year = s_year
+    ,survey_month = s_month
+    #,bsa_tin 
+    ,taxon
+    #,diatom_soft_body
     ,genus
     ,species
     ,organisms_per_ml
     ,cells_per_ml
-    ,mean_cell_biovolume
-    ,biovolume_per_ml
+    #,mean_cell_biovolume
+    ,biovolume_cubic_micron_per_ml
     ,gald
     ,phyto_form
-    ,shape
+    #,shape
     ,comments
   ) %>% 
   #add column for quality based on comments
   mutate(quality_check = case_when(
-    grepl("egraded", comments) ~ "degraded"
-              ,grepl("ragment", comments) ~"fragmented"
+    grepl("degraded", comments, ignore.case=T) ~ "degraded"
+              ,grepl("fragment|Fragment|broken|Broken", comments,ignore.case=T) ~"fragmented"
               ,TRUE ~ "good"
-  )) %>% 
+  )
+  #add column indicating amount of sediment and detritus
+  #comments often note differing levels of sediment vs detritus
+  #for simplicity combine them and use the highest level indicated
+  #eg, low detritus and high sediment simply becomes high
+  ,debris = case_when(
+    grepl("high",comments, ignore.case=T)~"high"
+    ,grepl("moderate",comments, ignore.case=T)~"moderate"
+    ,grepl("low",comments, ignore.case=T)~"low"
+    ,TRUE~NA
+  )
+  ) %>% 
   #drop comments column now
-  select(-comments) %>% 
+  #select(-comments) %>% 
   glimpse()
 
 #compare taxa between AWCA and EMP-----------------
@@ -487,7 +509,7 @@ tax_mism_gn <- anti_join(mismatch_gn,tax_emp_gn) %>%
 #look closer at records with these three taxa
 tax_mism_gn_detail <- phyto_format %>% 
   filter(genus %in% tax_mism_gn) %>% 
-  arrange(genus, station, date_time_pst)
+  arrange(genus, station, date_time_pdt)
 
 #EMP has two different classes for Achnanthidium
 #two different phyla for Gomphonema and Nitzschia
@@ -598,7 +620,7 @@ phyto_final<-phyto_tax %>%
          ,organisms_per_ml
          ,cells_per_ml
          #,biovolume_per_ml_old
-         ,biovolume_per_ml
+         ,biovolume_cubic_micron_per_ml
   ) %>%
   glimpse()
 
@@ -638,7 +660,7 @@ phyto_dfw<-phyto_tax %>%
          ,organisms_per_ml
          ,cells_per_ml
          #,biovolume_per_ml_old
-         ,biovolume_per_ml
+         ,biovolume_cubic_micron_per_ml
   ) %>%
   glimpse()
 #write_csv(phyto_dfw,file = "EDI/data_output/SMSCG_phytoplankton_formatted_DFW_only_2020-2021.csv")
