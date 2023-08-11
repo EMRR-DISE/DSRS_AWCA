@@ -17,7 +17,6 @@ library(readxl) #importing data from excel file
 
 #To do list------------------
 #look at Sarah Perry's code for assembling and publishing phyto data set
-#Time is PDT so I need to fix that; currently it's in PST
 #should check to see if organisms per ml and cells per ml are equal for cases where phyto_form = individual
 #move analysis and most plotting to a different script
 #use biovolume to calculate biomass
@@ -428,12 +427,26 @@ phyto_format <- phyto_cleanest %>%
   #select(-comments) %>% 
   glimpse()
 
-#compare taxa between AWCA and EMP-----------------
+#make file with all taxa to run through AlgaeBase---------------
 
 #create df with unique taxa
 tax_awca <- phyto_format %>% 
-  distinct(name,genus,species)  
+  distinct(taxon,genus,species)  
 #156 taxa; much fewer than the 998 in EMP dataset (as expected)
+
+#let's add a column to indicate whether genus or species level ID
+taxa_awca_more <- tax_awca %>% 
+  mutate(taxon_level = case_when(grepl("sp[.]", species,ignore.case=T) ~ "genus"
+                                 ,grepl("spp[.]", species,ignore.case=T) ~ "genus"
+                                 ,TRUE~"species")) %>% 
+  arrange(taxon_level,genus,species)
+
+#write the file with the taxa
+#write_csv(taxa_awca_more,"./phyto/data_output/AWCA_taxon_list.csv")
+
+#compare taxa between AWCA and EMP-----------------
+
+
 
 #look at non-matches
 tax_mism <- anti_join(tax_awca,tax_emp)
@@ -524,13 +537,6 @@ tax_mism_ab <- anti_join(tax_awca,tax_ab)
 #only 4 mismatches
 #three are same mismatches as with EMP (unsurprisingly): "Amoeba","Pedinomonas","Strobilidium"
 #Coelastrum is fourth mismatch (ie, Coelastrum microporum); maybe this was just missing from old EMP database I had; not an outdated name
-
-
-#add taxonomy info to AWCA data set---------------------
-
-
-
-
 
 
 #Add higher level taxonomic information using the algaeClassify package--------
