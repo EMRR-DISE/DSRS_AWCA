@@ -53,68 +53,18 @@ phytoplankton <- phyto_files %>%
 emp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1320.5&entityid=67b9d4ee30d5eee6e74b2300426471f9") %>% 
   clean_names()
 
-#read in taxonomy data
-#update this file with the updates/corrections I got from AlgaeBase 2/24/2022
-taxonomy <- read_csv("phyto/data_input/other/phyto_2018-12_taxonomy_complete.csv")
-
-#read in taxonomic info requested from AlgaeBase last year
-algaebase <- read_excel("phyto/data_input/other/Rasmussen_AlgaeBase_2022-02-24.xlsx") %>% 
+#read in taxonomy data from PESP GitHub repo
+taxonomy <- read_csv("https://raw.githubusercontent.com/InteragencyEcologicalProgram/PESP/main/admin/global_data/phyto_classification.csv") %>% 
   clean_names()
+
+#read in supplementary taxonomy info that fills gaps in PESP list
+taxonomy_fix <- read_csv("phyto/data_input/other/phyto_taxonomy_mismatch_fixed_2023-08-11.csv")
 
 #read in sampling month data
 #use this to check for typos in sampling dates and also to assign survey months (samples aren't always taken with sampling month)
 sample_month <- read_csv("phyto/data_input/other/survey_months_complete.csv")
 
-#read in some corrections to make to the taxonomy
-taxonomy_fix <- read_csv("phyto/data_input/other/phyto_taxonomy_mismatch_fixed.csv")
 
-#explore EMP data set--------------
-
-#create taxonomy data set from EMP data to compare with my sample taxa
-tax_emp <- emp %>% 
-  distinct(name, kingdom, phylum, class, algal_group, genus, species) %>% 
-  glimpse()
-
-#look at synonyms
-tax_emp_syn <- emp %>%
-  distinct(name, orig_name, kingdom, phylum, class, algal_group, genus, species) %>% 
-  filter(!is.na(orig_name)) %>% 
-  arrange(orig_name, genus, species)
-#all the outdated names in my dataset are present as orig_names in EMP data set with updated names in name
-#exception: EMP has my outdated name for Achnanthidium exiguum but updates it to another outdated name Lemnicola exigua instead of updated name Gogorevia exilis  
-
-#are there any cases with "spp."?
-#my data set has some of these
-tax_emp_spp <- tax_emp %>% 
-  filter(species=="spp." | species=="spp")
-#no, always "sp." which seems reasonable
-
-#explore and format the dataset I had updated by AlgaeBase----------
-#I think this was probably the full set of taxa from Tiffany's EMP database
-#NOTE: the higher level taxonomy is based on my original names, not the updated ones
-#NOTE: have some clean up to do still if using this taxonomy
-#eg, cases where "your name" is blank because there are multiple higher taxonomy matches for some taxa
-#presumably one of these matches is either an error or outdated
-
-#format the data set to compare the genera to the genera in the AWCA data set
-tax_ab <- algaebase %>% 
-  select(taxon_orig = your_names_in_the_same_orfer
-         ,taxon_match = name_in_ab
-         ,taxon_new = accepted_name_in_ab_if_different
-         ,genus = genus_name
-         ,empire = genera_empire
-         ,kingdom = genera_kingdom
-         ,phylum = genera_phylum
-         ,class = genera_class
-         ,order = genera_order
-         ,family = genera_family
-         ) %>% 
-  glimpse()
-
-#also create a version with the old names (but keep the new names column)
-#create new column that has names with "cf."
-#then separate genus from rest of name. genus will be used to compare with AWCA
-#convert wide to long, only keep and add column indicating old vers
 
 #format the AWCA sample data set------------
 #NOTE: leave out derived columns (ie, calculated from other columns)
@@ -147,7 +97,8 @@ phyto_clean <- phytoplankton %>%
          ,synonym
          ,unit_abundance #needed
          ,total_cells #needed
-         ,gald #probably optional
+         ,gald
+         ,gald_1 # in last two files there are multiple gald values; combine gald and gald_1
          ,phyto_form = colony_filament_individual_group_code
          ,taxonomist #useful for look at potential ID biases
          ,comments #need to look at these before consider dropping this column
@@ -155,8 +106,10 @@ phyto_clean <- phytoplankton %>%
          ,biovolume_1:biovolume_10 #needed
          ) %>% 
   mutate(
+    #combine gald and gald_1; they're the same things just with different names across files
+    gald_new = case_when(!is.na(gald)~gald,!is.na(gald_1)~gald_1)
     #change some columns from text to numeric
-    across(c(volume_received_m_l:bsa_tin,unit_abundance:gald,biovolume_1:biovolume_10), as.numeric)
+    ,across(c(volume_received_m_l:bsa_tin,unit_abundance:gald,biovolume_1:biovolume_10), as.numeric)
     #change some columns from character to factor
     ,across(c(station,phyto_form,taxonomist),as.factor)
     #format date; check date and time against input files to see if formatting worked correctly
@@ -199,7 +152,7 @@ phyto_clean <- phytoplankton %>%
          ,synonym
          ,unit_abundance #needed
          ,total_cells #needed
-         ,gald #possibly useful to some users
+         ,gald = gald_new
          ,phyto_form 
          #,taxonomist #useful for look at potential ID biases
          ,comments #need to look at these before consider dropping this column
@@ -406,10 +359,14 @@ phyto_format <- phyto_cleanest %>%
     #,shape
     ,comments
   ) %>% 
-  #add column for quality based on comments
-  mutate(quality_check = case_when(
+  mutate(
+    #change spp. to sp. in name and species columns
+    name =str_replace_all(taxon, pattern = c(" spp."=" sp."))
+    ,species2 = case_when(species=="spp."~"sp.",TRUE~species)
+    #add column for quality based on comments
+    ,quality_check = case_when(
     grepl("degraded", comments, ignore.case=T) ~ "degraded"
-              ,grepl("fragment|Fragment|broken|Broken", comments,ignore.case=T) ~"fragmented"
+              ,grepl("fragment", comments,ignore.case=T) ~"fragmented"
               ,TRUE ~ "good"
   )
   #add column indicating amount of sediment and detritus
@@ -423,16 +380,26 @@ phyto_format <- phyto_cleanest %>%
     ,TRUE~NA
   )
   ) %>% 
+  #drop two non-photosynthetic taxa
+  filter(name!="cf. Amoeba sp." & name!="Strobilidium sp.") %>% 
   #drop comments column now
-  #select(-comments) %>% 
+  select(-comments,-species,-taxon) %>% 
+  select(station:survey_month
+         ,name
+         ,genus
+         ,species = species2
+         ,organisms_per_ml:phyto_form
+         ,quality_check:debris) %>% 
   glimpse()
 
 #make file with all taxa to run through AlgaeBase---------------
+#NOTE: tried the search in a different script; ultimately didn't work that well
+#just use the EMP taxonomy
 
 #create df with unique taxa
 tax_awca <- phyto_format %>% 
-  distinct(taxon,genus,species)  
-#156 taxa; much fewer than the 998 in EMP dataset (as expected)
+  distinct(name,genus,species) 
+#148 taxa
 
 #let's add a column to indicate whether genus or species level ID
 taxa_awca_more <- tax_awca %>% 
@@ -446,83 +413,41 @@ taxa_awca_more <- tax_awca %>%
 
 #compare taxa between AWCA and EMP-----------------
 
-
-
 #look at non-matches
-tax_mism <- anti_join(tax_awca,tax_emp)
-#34 mismatches
-#some of these might just be formatting 
-#mine has cases of "spp." that could just be "sp."
-#I wonder if there is a meaningful difference 
-#does the use of "spp." indicate there were multiple morphospecies?
+tax_mism <- anti_join(tax_awca,taxonomy)
 
-#clean names of taxa in AWCA dataframe
-phyto_format_more <- phyto_format %>% 
-  mutate(
-    #change spp. to sp. in species column
-    species2 = case_when(species=="spp." ~ "sp.",TRUE ~ species)
-    #change spp. to sp. in name column
-    ,name2 = str_replace_all(name, pattern = "spp.", replacement = "sp.")) %>% 
-  #drop old columns
-  select(-c(name,species)) %>% 
-  #rename new columns
-  rename(name=name2,species=species2)
+tax_mism_names <- tax_mism %>% 
+  pull(name)
 
-#create df with unique taxa again
-tax_awca2 <- phyto_format_more %>% 
-  distinct(name,genus,species)
-#reduced list by six taxa, so presumably reduced some redundancy
-
-#look at non-matches again
-tax_mism2 <- anti_join(tax_awca2,tax_emp) %>%  
-  arrange(name)
-#28 mismatches
+tax_mism_genera <- tax_mism %>% 
+  pull(genus)
+#20 mismatches
 #over half are "cf." taxa; check to see if there are genus level matches at least
 #some are taxa that should probably be dropped because they aren't phyto (cf. Amoeba sp.)
 #some of these could be from name changes (eg, Chroococcus microscopicus should be Eucapsis microscopica)
 
-#how common are these mistmatching taxa?
-
-#first make vector of names to use in search
-tax_mism2_vect <- tax_mism2 %>% 
-  pull(name)
-
-tax_mism_count <- phyto_format %>% 
-  filter(name %in% tax_mism2_vect) %>%
-  group_by(genus,species,name) %>% 
-  count() %>% 
-  arrange(-n)
-#all but six taxa are present in fewer than five samples
 #check algae base taxonomy for updates
 #Chroococcus microscopicus = Eucapsis microscopica
 #Plagioselmis prolonga (and cf. Plagioselmis prolonga) = Teleaulax amphioxeia
 #Rhodomonas lacustris = Plagioselmis lacustris
 
 #export mismatch taxa to discuss with Tiffany and Sarah P
-#write_csv(tax_mism_count,"./phyto/data_input/other/phyto_taxonomy_mismatch.csv")
+#write_csv(tax_mism,"./phyto/data_input/other/phyto_taxonomy_mismatch_2023-08-11.csv")
 
 #look for genus level matches in EMP data set for mismatching taxa
-mismatch_gn <- tax_mism2 %>% 
-  distinct(genus) 
-#21 genera
+mismatch_gn <- tax_mism %>% 
+  pull(genus) 
+#18 genera
 
 #which of the mismatched taxa are in EMP data set as genera at least?  
-tax_emp_gn <- tax_emp %>% 
+tax_emp_gn <- taxonomy %>% 
   distinct(kingdom, phylum, class, algal_group, genus) %>% 
-  #filter(genus %in% mismatch_genera) %>% 
+  filter(genus %in% mismatch_gn) %>% 
   arrange(genus)
 
-#look at non-matches at genus level
-tax_mism_gn <- anti_join(mismatch_gn,tax_emp_gn) %>%  
-  arrange(genus)
 #just three genera didn't match with EMP: "Amoeba","Pedinomonas","Strobilidium"
 #should probably drop "Amoeba", "Strobilidium"; I don' think they are photosynthetic
 #Pedinomonas" is a green algae; maybe EMP just doesn't ever get it
-
-#look closer at records with these three taxa
-tax_mism_gn_detail <- phyto_format %>% 
-  filter(genus %in% tax_mism_gn) %>% 
-  arrange(genus, station, date_time_pdt)
 
 #EMP has two different classes for Achnanthidium
 #two different phyla for Gomphonema and Nitzschia
@@ -530,39 +455,30 @@ tax_mism_gn_detail <- phyto_format %>%
 
 #we got 21 matches, so even though there are some species level differences, perhaps there aren't genus level ones
 
-#compare taxa between AWCA and the taxonomy I had updated by AlgaeBase-----------------
-
-#look at non-matches based on genus
-tax_mism_ab <- anti_join(tax_awca,tax_ab)
-#only 4 mismatches
-#three are same mismatches as with EMP (unsurprisingly): "Amoeba","Pedinomonas","Strobilidium"
-#Coelastrum is fourth mismatch (ie, Coelastrum microporum); maybe this was just missing from old EMP database I had; not an outdated name
-
-
-#Add higher level taxonomic information using the algaeClassify package--------
-#as of 3/4/2022 this package wasn't working
-
-#started by trying out examples from documentation. they didn't work
-#algae_search(genus='Anabaena',species='flos-aquae',long=FALSE)
-
-#data(lakegeneva)
-#lakegeneva=lakegeneva[1,] ##use 1 row for testing
-#lakegeneva.algaebase<-
-#  spp_list_algaebase(lakegeneva,phyto.name='phyto_name',long=FALSE,write=FALSE)
-
 #Add higher level taxonomic information and habitat information manually-------------
 
-#names(taxonomy)
+#start by creating two subsets of the data set
+#one with matches to the EMP taxonomy and one without
 
-#subset to just the needed columns
+#dataset with EMP taxon matches
+phyto_emp_m <- phyto_format %>% 
+  filter(!(name %in% tax_mism_names))
+
+#dataset without EMP taxon matches
+phyto_emp_nm <- phyto_format %>% 
+  filter(name %in% tax_mism_names)
+
+#prepare EMP taxonomy file
 #will match genus name between the two data frames
 taxon_high<-taxonomy %>% 
-  clean_names() %>% 
   select(kingdom
   ,phylum
   ,class
+  ,algal_group
   ,genus
-  ,algal_type) %>%  #confirmed that there is just one type per genus
+  ,name
+  ,current_name
+  ) %>%  
 #this approach is very simple because it removes the need for exact matches in the taxon names
 #part of the difficulty in matching taxon names is presence of "cf." for many taxa
 #unfortunately by just matching by genus and not taxon, we lose the habitat type, and salinity range info
@@ -571,62 +487,48 @@ taxon_high<-taxonomy %>%
   #check AlgaeBase to see which taxonomic info is correct
   filter(!(genus == "Achnanthidium" & class =="Fragilariophyceae") & 
            !(genus == "Elakatothrix" & class =="Chlorophyceae") &
-           !(genus == "Leptocylindrus" & algal_type =="Centric diatom"))%>% 
-  #condense taxonomy data set to just the unique combinations
-  distinct(kingdom,phylum,class,genus)  
-#initially some genera appeared more than once in this taxonomy data set
+           !(genus == "Leptocylindrus" & algal_group =="Centric diatom"))
+  #initially some genera appeared more than once in this taxonomy data set
 #but this has been corrected
 
-#investigating duplicates for genus---------------
 
-#count number of times each genus appears
-#ideally this would be once
-tax_gen_sum<-data.frame(table(taxon_high$genus)) 
 
-#look at repeat genera
-tax_gen_sum_sub<-filter(tax_gen_sum, Freq >1)
-#first time doing this there were three genera plus "unknown"
-#Achnanthidium    n=2, Elakatothrix    n=2, Leptocylindrus   n=2
-#fixed this so that only "unknown" has duplicates
 
-#now go back to taxonomy data set and look at these three genera
-#gen_dup<-taxon_high_rn %>% 
-#  filter(genus == "Achnanthidium" | genus =="Elakatothrix" | genus=="Leptocylindrus" )
-#remove the combos that are duplicates from the main data set
+#combine sample data and high level taxonomy----------
 
-#combine sample data and high level taxonomy by genus----------
-names(phyto_cleanest)
-names(taxon_high)
-phyto_tax<-left_join(phyto_cleanest,taxon_high) %>% 
+#match subset with EMP taxonomy
+phyto_tax_emp<-left_join(phyto_emp_m,taxon_high) %>% 
+  glimpse()
+#looks good
+
+#match subset that doesn't match EMP taxonomy
+phyto_tax_gap<-left_join(phyto_emp_nm,taxonomy_fix) %>% 
   glimpse()
 
+#bind two subsets back together
+phyto_tax_comp <-bind_rows(phyto_tax_emp,phyto_tax_gap) %>% 
+  arrange(date_time_pdt,station)
+
 #final edits to complete final data version of data set
-phyto_final<-phyto_tax %>% 
-  #order by date and time
-  arrange(date, time) %>%
+phyto_final<-phyto_tax_comp %>% 
   mutate(
     #fix one case of phyto_form from "f." to "f"
     phyto_form = case_when(phyto_form =="f." ~ "f",TRUE ~ phyto_form)
     #make time a character column for export; otherwise will automatically convert to UTC
-    ,time_pst = as.character(time)
+    ,time = as.character(time)
+    ,date_time_pdt = as.character(date_time_pdt)
                  ) %>% 
   #reorder columns data frame export
   select(station
-         ,station_comb
-         ,region
-         ,collected_by
-         ,date
-         ,time_pst
-         ,kingdom
-         ,phylum
-         ,class
+         ,date_time_pdt
+         ,survey_year
+         ,survey_month
+         ,taxon_original = name
+         ,taxon_current = current_name
          ,genus
-         ,taxon
-         ,phyto_form
-         ,organisms_per_ml
-         ,cells_per_ml
-         #,biovolume_per_ml_old
-         ,biovolume_cubic_micron_per_ml
+         ,species
+         ,kingdom:algal_group
+         ,organisms_per_ml:debris
   ) %>%
   glimpse()
 
@@ -634,7 +536,7 @@ phyto_final<-phyto_tax %>%
 #check_na2 <- phyto_final[rowSums(is.na(phyto_final)) > 0,]
 
 #write the formatted data as csv 
-#write_csv(phyto_final,file = "EDI/data_output/SMSCG_phytoplankton_formatted_2020-2021.csv")
+#write_csv(phyto_final,file = "./phyto/data_output/AWCA_phytoplankton_formatted_2023-08-11.csv")
 
 #write version of data set that includes only the samples collected by DFW--------
 #this is for the phytoplankton synthesis effort
